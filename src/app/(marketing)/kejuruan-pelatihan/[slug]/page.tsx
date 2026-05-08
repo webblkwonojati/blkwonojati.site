@@ -40,7 +40,7 @@ export default async function DetailKejuruanPage({ params }: { params: Promise<{
     <main className="relative flex min-h-screen w-full flex-col bg-transparent font-sans">
       <div className="flex-1 pb-32">
         {/* Detail Hero Section */}
-        <section className="pt-32 pb-16 px-6 relative overflow-hidden">
+        <section className="pt-28 md:pt-32 pb-16 px-6 relative overflow-hidden">
           <div className="mx-auto max-w-4xl relative z-10">
             <Link 
               href="/kejuruan-pelatihan"
@@ -59,7 +59,7 @@ export default async function DetailKejuruanPage({ params }: { params: Promise<{
             {program.hero_image && (
               <div className="mt-10 overflow-hidden relative group">
                 {/* Scroll horizontally with native CSS snap */}
-                <div className="flex w-full overflow-x-auto snap-x snap-mandatory hide-scrollbar rounded-[2rem] border-4 border-white shadow-xl bg-slate-100 flex-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <div className="flex w-full overflow-x-auto snap-x snap-mandatory hide-scrollbar rounded-[1.5rem] md:rounded-[2rem] border-4 border-white shadow-xl bg-slate-100 flex-nowrap" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   {program.hero_image.split(',').map((url: string, idx: number) => (
                     <div key={idx} className="w-full shrink-0 snap-center relative flex justify-center items-center overflow-hidden">
                       <Image 
@@ -94,13 +94,13 @@ export default async function DetailKejuruanPage({ params }: { params: Promise<{
         {/* Dynamic Rich Text Content */}
         <section className="px-6 relative z-10">
           <div className="mx-auto max-w-4xl">
-            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 flex flex-col md:flex-row gap-12 items-start relative">
+            <div className="bg-white rounded-3xl p-6 md:p-12 shadow-sm border border-slate-100 flex flex-col md:flex-row gap-12 items-start relative">
               
               {/* Main Content (HTML) - Fixed Typography Selectors */}
               <div className="flex-1 w-full max-w-none 
-                  [&_h1]:font-display [&_h1]:font-bold [&_h1]:text-slate-900 [&_h1]:text-3xl [&_h1]:mb-6 [&_h1]:mt-8
-                  [&_h2]:font-display [&_h2]:font-bold [&_h2]:text-slate-900 [&_h2]:text-2xl [&_h2]:mb-4 [&_h2]:mt-8
-                  [&_h3]:font-display [&_h3]:font-bold [&_h3]:text-slate-900 [&_h3]:text-xl [&_h3]:mb-3 [&_h3]:mt-6
+                  [&_h1]:font-display [&_h1]:font-bold [&_h1]:text-slate-900 [&_h1]:text-2xl md:[&_h1]:text-3xl [&_h1]:mb-6 [&_h1]:mt-8
+                  [&_h2]:font-display [&_h2]:font-bold [&_h2]:text-slate-900 [&_h2]:text-xl md:[&_h2]:text-2xl [&_h2]:mb-4 [&_h2]:mt-8
+                  [&_h3]:font-display [&_h3]:font-bold [&_h3]:text-slate-900 [&_h3]:text-lg md:[&_h3]:text-xl [&_h3]:mb-3 [&_h3]:mt-6
                   [&_p]:text-slate-600 [&_p]:leading-relaxed [&_p]:mb-5
                   [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:text-slate-600 space-y-2
                   [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:text-slate-600 

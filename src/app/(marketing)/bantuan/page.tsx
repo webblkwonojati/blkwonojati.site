@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Bantuan() {
   return (
-    <main className="flex-1 pt-32 px-6 pb-24 bg-transparent relative">
+    <main className="flex-1 pt-28 md:pt-32 px-6 pb-24 bg-transparent relative">
       <BantuanClient />
     </main>
   );

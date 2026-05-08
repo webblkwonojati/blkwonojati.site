@@ -56,7 +56,7 @@ export default function JobCard({ job }: JobCardProps) {
                 {job.posisi}
               </h3>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[11px] font-medium text-slate-500 line-clamp-1">{job.instansi_perusahaan}</span>
+                <span className="text-xs font-medium text-slate-500 line-clamp-1">{job.instansi_perusahaan}</span>
                 <CheckCircleFilled className="text-blue-500/80 text-[10px]" />
               </div>
             </div>
@@ -64,7 +64,7 @@ export default function JobCard({ job }: JobCardProps) {
 
           {/* Info Area */}
           <div className="flex flex-wrap gap-x-4 gap-y-2 mb-8">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{job.lokasi}</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{job.lokasi}</span>
             <span className="text-slate-200 inline-block">•</span>
             <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
                {job.tipe_pekerjaan}

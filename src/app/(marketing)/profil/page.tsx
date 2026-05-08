@@ -29,7 +29,7 @@ export default function ProfilPage() {
     <main className="relative flex h-auto min-h-screen w-full flex-col bg-transparent">
       <div className="flex-1">
         {/* --- Intro Content Section --- */}
-        <section className="pt-32 pb-16 px-6 border-b border-slate-100">
+        <section className="pt-28 md:pt-32 pb-16 px-6 border-b border-slate-100">
           <div className="mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -65,7 +65,7 @@ export default function ProfilPage() {
         </section>
 
         {/* --- Vision & Mission --- */}
-        <section className="py-24 px-6 bg-transparent border-b border-slate-100">
+        <section className="py-16 md:py-24 px-6 bg-transparent border-b border-slate-100">
           <div className="mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative">
@@ -88,7 +88,7 @@ export default function ProfilPage() {
                 />
                 
                 <div className="space-y-6">
-                  <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+                  <div className="p-5 md:p-8 bg-white border border-slate-200 rounded-xl shadow-sm">
                     <p className="text-lg md:text-xl font-bold text-slate-800 leading-tight">
                       "Mewujudkan SDM profesional dan berkualitas melalui sistem pelatihan terpadu."
                     </p>
@@ -111,7 +111,7 @@ export default function ProfilPage() {
         </section>
 
         {/* --- History --- */}
-        <section className="py-24 px-6 border-b border-slate-100 bg-transparent">
+        <section className="py-16 md:py-24 px-6 border-b border-slate-100 bg-transparent">
           <div className="mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="flex flex-col justify-center">
@@ -134,7 +134,7 @@ export default function ProfilPage() {
         </section>
 
         {/* --- Facilities --- */}
-        <section className="py-24 px-6 bg-transparent pb-32">
+        <section className="py-16 md:py-24 px-6 bg-transparent pb-32">
           <div className="mx-auto max-w-7xl">
             <SectionHeader 
               badge="Fasilitas"

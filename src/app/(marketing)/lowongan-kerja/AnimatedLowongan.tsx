@@ -149,7 +149,7 @@ export default function AnimatedLowongan({ jobs }: AnimatedLowonganProps) {
         centered
         width={400}
       >
-        <div className="bg-slate-900 p-8 text-white relative overflow-hidden">
+        <div className="bg-slate-900 p-6 md:p-8 text-white relative overflow-hidden">
           <div className="relative z-10">
              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
                 <span className="material-symbols-outlined text-2xl text-primary">bolt</span>
@@ -161,7 +161,7 @@ export default function AnimatedLowongan({ jobs }: AnimatedLowonganProps) {
           </div>
           <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full"></div>
         </div>
-        <div className="p-8 space-y-4">
+        <div className="p-6 md:p-8 space-y-4">
            <Link 
              href="/login" 
              className="group relative flex items-center justify-center gap-3 w-full h-12 bg-primary rounded-lg text-[10px] font-bold uppercase tracking-widest text-white hover:opacity-90 transition-all duration-300 shadow-lg shadow-green-500/20 active:scale-95 overflow-hidden"

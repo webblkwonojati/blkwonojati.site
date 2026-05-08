@@ -13,7 +13,9 @@ import {
   Popconfirm, 
   Typography,
   Card,
-  Flex
+  Flex,
+  Tag,
+  Empty
 } from "antd";
 import { 
   PlusOutlined, 
@@ -23,7 +25,7 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
-import { Building2, Eye, Pencil, Trash2 } from "lucide-react";
+import { Building2, Eye, Pencil, Trash2, Briefcase } from "lucide-react";
 
 const { Title, Text } = Typography;
 
@@ -83,72 +85,57 @@ export default function LowonganClient({ initialJobs }: { initialJobs: any[] }) 
 
   const columns = [
     {
-      title: 'POSISI & PERUSAHAAN',
-      key: 'position',
-      width: '40%',
+      title: 'LOWONGAN',
+      key: 'job',
+      fixed: 'left' as const,
       render: (_: any, record: any) => (
-        <div className="flex items-center gap-4 py-1">
-          <div className="size-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100 overflow-hidden">
+        <Flex gap="middle">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
             {record.poster_url ? (
               <img src={record.poster_url} className="w-full h-full object-cover" alt={record.posisi} />
             ) : (
-              <Building2 className="w-4 h-4 text-slate-300" />
+              <Briefcase className="text-slate-300 text-xl" />
             )}
           </div>
-          <div className="flex flex-col min-w-0">
-            <Text strong className="text-slate-900 text-sm tracking-tight truncate">{record.posisi}</Text>
-            <Text type="secondary" className="text-[11px] font-medium truncate">{record.instansi_perusahaan}</Text>
+          <div className="flex flex-col max-w-[150px] md:max-w-sm">
+            <Text strong className="text-slate-900 leading-tight block truncate">{record.posisi}</Text>
+            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block">{record.instansi_perusahaan}</Text>
           </div>
-        </div>
+        </Flex>
       ),
     },
     {
-      title: 'TIPE',
+      title: 'KATEGORI',
       dataIndex: 'tipe_pekerjaan',
-      key: 'type',
-      render: (type: string) => (
-        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-          {type}
-        </span>
-      ),
-    },
-    {
-      title: 'VIEWS',
-      dataIndex: 'views_count',
-      key: 'views',
-      align: 'center' as const,
-      render: (count: number) => (
-        <div className="flex items-center justify-center gap-1.5 text-slate-400">
-          <Eye className="w-3.5 h-3.5" />
-          <span className="text-xs font-bold">{count || 0}</span>
-        </div>
+      key: 'category',
+      responsive: ['md' as const],
+      render: (category: string) => (
+        <Tag color="blue" className="font-bold border-none rounded-full px-3 uppercase text-[10px] tracking-widest py-0.5">
+          {category}
+        </Tag>
       ),
     },
     {
       title: 'STATUS',
       key: 'status',
+      responsive: ['sm' as const],
       render: (_: any, record: any) => (
-        <Flex gap="small" align="center">
-          <Switch 
-            size="small"
-            checked={record.is_active} 
-            loading={togglingId === record.id}
-            onChange={() => handleToggleActive(record.id, record.is_active)}
-            style={{ backgroundColor: record.is_active ? '#5ca25a' : undefined }}
-          />
-          <span className={`text-[10px] font-black uppercase tracking-widest ${record.is_active ? 'text-emerald-500' : 'text-slate-300'}`}>
-            {record.is_active ? 'Aktif' : 'Draft'}
+        <Badge status={record.is_active ? "success" : "default"} text={
+          <span className={`text-[10px] font-black uppercase tracking-widest ${record.is_active ? "text-emerald-500" : "text-slate-400"}`}>
+            {record.is_active ? "Active" : "Inactive"}
           </span>
-        </Flex>
+        } />
       ),
     },
     {
-      title: 'DEADLINE',
-      dataIndex: 'batas_lamaran',
-      key: 'deadline',
-      render: (date: string) => (
-        <Text className="text-slate-400 font-medium text-xs">
-          {date ? new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '-'}
+      title: 'TANGGAL',
+      key: 'date',
+      responsive: ['lg' as const],
+      render: (_: any, record: any) => (
+        <Text type="secondary" className="text-xs uppercase font-bold tracking-tighter">
+          {record.created_at ? new Date(record.created_at).toLocaleDateString("id-ID", {
+            day: "numeric", month: "short", year: "numeric",
+          }) : '-'}
         </Text>
       ),
     },
@@ -156,8 +143,9 @@ export default function LowonganClient({ initialJobs }: { initialJobs: any[] }) 
       title: 'AKSI',
       key: 'action',
       align: 'right' as const,
+      fixed: 'right' as const,
       render: (_: any, record: any) => (
-        <Flex gap="4px" justify="end">
+        <Flex gap="small" justify="end">
           <Button 
             type="text" 
             size="small"
@@ -237,24 +225,21 @@ export default function LowonganClient({ initialJobs }: { initialJobs: any[] }) 
       </div>
 
       {/* ─── Clean Table ─────────────────────────────────────────────────── */}
-      <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-2xl shadow-slate-200/30 overflow-hidden">
+      <div className="bg-white rounded-[2rem] border border-slate-50 shadow-sm overflow-hidden">
         <Table 
-          dataSource={filteredJobs} 
           columns={columns} 
+          dataSource={filteredJobs} 
           rowKey="id"
-          pagination={{
+          scroll={{ x: 800 }}
+          pagination={{ 
             pageSize: 10,
-            showSizeChanger: false,
             placement: ['bottomCenter'],
             className: "py-8 m-0 border-t border-slate-50 font-bold",
-            itemRender: (page, type, originalElement) => {
-              if (type === 'prev') return <Text className="text-[10px] font-black uppercase tracking-widest cursor-pointer hover:text-primary transition-colors">Prev</Text>;
-              if (type === 'next') return <Text className="text-[10px] font-black uppercase tracking-widest cursor-pointer hover:text-primary transition-colors">Next</Text>;
-              if (type === 'page') return <div className="text-xs font-bold w-full h-full flex items-center justify-center">{page}</div>;
-              return originalElement;
-            }
+            showTotal: (total) => <Text type="secondary" className="text-[10px] font-black uppercase tracking-widest pl-8">Total {total} Lowongan</Text>
           }}
-          className="custom-antd-table-clean"
+          locale={{
+            emptyText: <Empty description="Belum ada lowongan yang sesuai" />
+          }}
         />
       </div>
     </div>

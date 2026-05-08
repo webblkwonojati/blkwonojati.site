@@ -44,7 +44,7 @@ export default async function LowonganKerja({ searchParams }: { searchParams: Pr
 
   return (
     <main className="flex-1 bg-transparent">
-      <section className="pt-32 pb-24 px-6 bg-transparent">
+      <section className="pt-28 md:pt-32 pb-24 px-6 bg-transparent">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             withBreadcrumbs

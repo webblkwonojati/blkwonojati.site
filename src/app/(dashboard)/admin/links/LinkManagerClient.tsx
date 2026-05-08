@@ -174,23 +174,23 @@ export default function LinkManagerClient({
 
         {activeTab === 'links' ? (
           <>
-            <div className="flex justify-between items-center mb-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
               <div className="space-y-1">
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase">Daftar Tautan</h2>
                 <p className="text-sm text-slate-500 font-medium">Kelola semua tombol navigasi cepat untuk halaman publik.</p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                 <a 
                   href="http://localhost:3001" 
                   target="_blank" 
-                  className="h-12 px-6 rounded-2xl border border-slate-200 bg-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all"
+                  className="h-12 px-6 rounded-2xl border border-slate-200 bg-white flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all flex-1 sm:flex-initial"
                 >
                   <ExternalLink className="w-4 h-4" />
                   View Live
                 </a>
                 <button 
                   onClick={() => { setIsAdding(true); setEditingId(null); setFormState({title: '', url: '', icon: ''}); }}
-                  className="h-12 px-6 rounded-2xl bg-primary text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-green-500/20 active:scale-95 transition-all"
+                  className="h-12 px-6 rounded-2xl bg-primary text-white flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-green-500/20 active:scale-95 transition-all flex-1 sm:flex-initial"
                 >
                   <Plus className="w-4 h-4" />
                   Add Link

@@ -40,12 +40,12 @@ import nextDynamic from "next/dynamic";
 const FAQ_ITEMS = faqs.map((faq) => ({
   key: faq.key,
   label: (
-    <Text className="text-lg font-bold text-slate-800 py-3 block tracking-tight">
+    <Text className="text-base md:text-lg font-bold text-slate-800 py-3 block tracking-tight">
       {faq.label}
     </Text>
   ),
   children: (
-    <Paragraph className="text-slate-500 leading-relaxed text-base font-medium pb-4">
+    <Paragraph className="text-slate-500 leading-relaxed text-sm md:text-base font-medium pb-4">
       {faq.children}
     </Paragraph>
   ),
@@ -79,8 +79,8 @@ export default function BantuanClient() {
       />
 
       {/* Location Section - Refined Layout */}
-      <div className="mt-32 p-1 bg-slate-50 rounded-[3rem] border border-slate-100/50">
-        <div className="bg-white rounded-[2.8rem] overflow-hidden shadow-sm border border-slate-100">
+      <div className="mt-24 md:mt-32 p-1 bg-slate-50 rounded-[1.5rem] md:rounded-[3rem] border border-slate-100/50">
+        <div className="bg-white rounded-[1.4rem] md:rounded-[2.8rem] overflow-hidden shadow-sm border border-slate-100">
           <div className="grid lg:grid-cols-12">
             {/* Map Area */}
             <div className="lg:col-span-7 h-[400px] lg:h-auto min-h-[350px] relative">
@@ -95,13 +95,13 @@ export default function BantuanClient() {
             </div>
 
             {/* Content Area */}
-            <div className="lg:col-span-5 p-10 lg:p-14 flex flex-col justify-center bg-slate-50/30">
+            <div className="lg:col-span-5 p-6 md:p-10 lg:p-14 flex flex-col justify-center bg-slate-50/30">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-8">
                  <MessageOutlined className="text-xl" />
               </div>
               
-              <Title level={2} className="!text-3xl !font-bold !tracking-tight !text-slate-900 mb-6 !leading-tight">
-                Kunjungi Workshop <br />Kami di Wonojati
+              <Title level={2} className="!text-2xl md:!text-3xl !font-bold !tracking-tight !text-slate-900 mb-6 !leading-tight">
+                Kunjungi Workshop <br className="hidden md:block" />Kami di Wonojati
               </Title>
               
               <div className="space-y-6 mb-10">
@@ -140,12 +140,12 @@ export default function BantuanClient() {
       </div>
 
       {/* Ultra Minimalist CTA Section */}
-      <div className="mt-32 py-20 px-10 bg-slate-50 rounded-[2.5rem] border border-slate-100/50 flex flex-col items-center text-center">
+      <div className="mt-20 md:mt-32 py-12 md:py-20 px-6 md:px-10 bg-slate-50 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100/50 flex flex-col items-center text-center">
         <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-primary shadow-sm border border-slate-100 mb-8">
            <MessageOutlined className="text-3xl" />
         </div>
         
-        <Title level={2} className="!m-0 !text-3xl !font-bold !tracking-tight !text-slate-900 border-none mb-4">
+        <Title level={2} className="!m-0 !text-2xl md:!text-3xl !font-bold !tracking-tight !text-slate-900 border-none mb-4">
           Masih Memiliki Pertanyaan?
         </Title>
         

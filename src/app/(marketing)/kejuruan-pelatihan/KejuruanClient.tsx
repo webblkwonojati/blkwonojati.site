@@ -104,7 +104,7 @@ export default function KejuruanClient({ initialData }: { initialData?: any[] })
 
   return (
     <main className="flex-1 bg-transparent">
-      <section className="pt-32 pb-16 px-6 md:px-12">
+      <section className="pt-28 md:pt-32 pb-16 px-6 md:px-12">
         <motion.div 
           initial="hidden"
           animate="visible"
@@ -156,14 +156,14 @@ export default function KejuruanClient({ initialData }: { initialData?: any[] })
             ))}
           </motion.div>
 
-          <div className="mt-32 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="mt-20 md:mt-32 grid lg:grid-cols-2 gap-16 items-center">
             {/* Keunggulan Pelatihan */}
             <motion.div 
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="bg-slate-900 rounded-[2rem] p-10 lg:p-14 shadow-2xl relative overflow-hidden group"
+              className="bg-slate-900 rounded-[2rem] p-6 lg:p-14 shadow-2xl relative overflow-hidden group"
             >
               <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full -mr-40 -mt-40 blur-[100px]" />
               
@@ -172,8 +172,8 @@ export default function KejuruanClient({ initialData }: { initialData?: any[] })
               <ul className="space-y-6 relative z-10">
                 {ADVANTAGES.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-4">
-                    <CheckCircleOutlined className="text-primary text-xl shrink-0" />
-                    <span className="text-slate-300 font-bold uppercase tracking-[0.15em] text-[10px]">{item}</span>
+                    <CheckCircleOutlined style={{ color: 'white' }} className="text-xl shrink-0 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]" />
+                    <span className="text-slate-300 font-bold uppercase tracking-[0.15em] text-[11px] md:text-xs">{item}</span>
                   </li>
                 ))}
               </ul>

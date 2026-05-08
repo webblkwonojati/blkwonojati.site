@@ -10,6 +10,10 @@ import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import ButtonPremium from "@/components/ui/ButtonPremium";
 
+const WhatsAppIcon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-7.6 8.38 8.38 0 0 1 3.8.9L21 7.5z" /></svg>
+);
+
 const navLinks = [
   { name: "Beranda", href: "/" },
   { name: "Profil", href: "/profil" },
@@ -41,14 +45,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Scroll lock when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
   // Determine navbar appearance
-  // On home, it's transparent at top. On subpages, it's always solidified for consistency.
-  const isTransparent = isHomePage && !isScrolled;
+  // On home or pages with dark heroes, it's transparent at top.
+  const darkHeroPaths = ["/"];
+  const hasDarkHero = darkHeroPaths.includes(pathname);
+  const isTransparent = hasDarkHero && !isScrolled;
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+        "fixed top-0 left-0 right-0 z-[1001] transition-all duration-300 border-b",
         isScrolled ? "bg-white/80 backdrop-blur-md border-slate-200 shadow-sm" : "bg-transparent border-transparent"
       )}
     >
@@ -84,13 +102,14 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-[11px] font-bold uppercase tracking-widest transition-colors",
+                  "text-xs font-bold uppercase tracking-widest transition-all duration-300",
+                  isTransparent && "drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]",
                   isActive
                     ? isTransparent
-                      ? "text-white border-b-2 border-white pb-1"
+                      ? "!text-white border-b-2 border-white pb-1"
                       : "text-primary"
                     : isTransparent
-                      ? "text-white/70 hover:text-white"
+                      ? "!text-white/90 hover:!text-white"
                       : "text-slate-600 hover:text-primary"
                 )}
               >
@@ -121,35 +140,117 @@ export default function Navbar() {
         </button>
       </div >
 
-      {/* Simplified Mobile Menu */}
+      {/* Premium Side Drawer Mobile Menu */}
       <AnimatePresence>
-        {
-          isMobileMenuOpen && (
+        {isMobileMenuOpen && (
+          <>
+            {/* Glassmorphism Backdrop - Darkened for absolute separation */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-xl lg:hidden overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-xl lg:hidden"
+            />
+
+            {/* Side Drawer - Opaque White */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300, mass: 0.8 }}
+              className="fixed top-0 right-0 h-[100dvh] w-[85%] max-w-sm !bg-white bg-opacity-100 z-[110] lg:hidden flex flex-col shadow-2xl"
             >
-              <div className="flex flex-col p-6 gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-sm font-bold text-slate-600 uppercase tracking-widest py-2"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full mt-4 bg-primary text-white">Masuk Portal</Button>
-                </Link>
+              <div className="flex flex-col h-full bg-white relative">
+              {/* Drawer Header */}
+              <div className="h-20 px-8 flex items-center justify-between border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                   <div className="w-8 h-8 relative">
+                      <Image src="/logo-blk.png" fill sizes="32px" className="object-contain" alt="Logo" />
+                   </div>
+                   <span className="text-sm font-black tracking-tighter text-slate-900">WONOJATI</span>
+                </div>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 active:scale-90 transition-all"
+                >
+                  <span className="material-symbols-outlined text-xl">close</span>
+                </button>
               </div>
-            </motion.div>
-          )
-        }
-      </AnimatePresence >
+
+              {/* Navigation Links - Staggered */}
+              <nav className="flex-1 overflow-y-auto py-8 px-8">
+                <div className="flex flex-col gap-1">
+                  {navLinks.map((link, i) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + i * 0.05 }}
+                      >
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={cn(
+                            "flex items-center justify-between py-4 group transition-all",
+                            isActive ? "text-primary border-b border-primary/20" : "text-slate-600 border-b border-transparent"
+                          )}
+                        >
+                          <span className={cn(
+                            "text-base tracking-tight font-bold",
+                            isActive ? "text-primary" : "text-slate-600"
+                          )}>
+                            {link.name}
+                          </span>
+                          <span className={cn(
+                            "material-symbols-outlined text-lg opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0",
+                            isActive && "opacity-100 translate-x-0"
+                          )}>
+                            east
+                          </span>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="mt-12"
+                >
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button className="w-full h-14 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-900/10 active:scale-95 transition-all">
+                      Masuk Portal
+                    </Button>
+                  </Link>
+                </motion.div>
+              </nav>
+
+              {/* Drawer Footer */}
+              <div className="p-8 bg-slate-50/50 border-t border-slate-100 mt-auto">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono">Connect With Us</p>
+                <div className="flex items-center gap-4">
+                   {/* Social shortcuts matching footer style but for sidebar */}
+                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                      <span className="material-symbols-outlined text-lg">public</span>
+                   </a>
+                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                      <span className="material-symbols-outlined text-lg">mail</span>
+                   </a>
+                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                      <WhatsAppIcon />
+                   </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
     </header >
   );
 }

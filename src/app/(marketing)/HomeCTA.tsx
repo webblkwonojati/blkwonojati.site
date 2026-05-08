@@ -13,7 +13,7 @@ export default function HomeCTA() {
     <section className="py-24 px-6 relative overflow-hidden bg-white">
       {/* Container to give it a floating card effect */}
       <div className="mx-auto max-w-6xl">
-        <div className="relative rounded-[3rem] overflow-hidden bg-[#1a3a1a] shadow-2xl border border-white/10 p-10 md:p-20">
+        <div className="relative rounded-[3rem] overflow-hidden bg-[#1a3a1a] shadow-2xl border border-white/10 p-6 md:p-20">
 
           {/* Background Image Layer */}
           <div className="absolute inset-0 z-0">
@@ -48,6 +48,16 @@ export default function HomeCTA() {
             {/* Glowing Orbs */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] pointer-events-none" />
+
+            {/* Floating Decorative House Asset */}
+            <div className="absolute -bottom-16 -right-16 w-[280px] md:w-[700px] h-[200px] md:h-[500px] opacity-20 md:opacity-40 pointer-events-none z-10 transition-transform hover:scale-105 duration-700">
+              <Image
+                src="/rumah-blk.png"
+                alt="BLK House"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
 
           {/* Content Layer */}

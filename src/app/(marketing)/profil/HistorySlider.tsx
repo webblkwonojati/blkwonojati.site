@@ -19,7 +19,7 @@ export default function HistorySlider() {
 
   return (
     <div
-      className="w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden border border-slate-200 bg-slate-100 relative shadow-2xl shadow-slate-200/50"
+      className="w-full aspect-[4/3] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-slate-200 bg-slate-100 relative shadow-2xl shadow-slate-200/50"
       style={{ aspectRatio: '4 / 3' }}
     >
       <AnimatePresence mode="wait">

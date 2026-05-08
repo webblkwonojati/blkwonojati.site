@@ -62,7 +62,7 @@ export default function HomeInstagram() {
                   boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)",
                   margin: "1px",
                   maxWidth: "540px",
-                  minWidth: "326px",
+                  minWidth: "280px",
                   padding: 0,
                   width: "99.375%"
                 }}

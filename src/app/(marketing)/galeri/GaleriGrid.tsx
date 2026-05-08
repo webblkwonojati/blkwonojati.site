@@ -34,13 +34,13 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
 
   return (
     <div className="space-y-12">
-      {/* Category Pills */}
-      <div className="flex flex-wrap justify-center gap-3">
+      {/* Category Pills - Scrollable on Mobile */}
+      <div className="flex flex-nowrap overflow-x-auto lg:flex-wrap lg:justify-center gap-3 pb-4 lg:pb-0 no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
+            className={`whitespace-nowrap px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all shrink-0 ${
               activeCategory === cat 
                 ? "bg-slate-900 text-white shadow-xl shadow-slate-900/10 scale-105" 
                 : "bg-slate-50 text-slate-400 hover:bg-slate-100"
@@ -66,7 +66,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
               onClick={() => setSelectedImage(index)}
-              className="group relative aspect-square rounded-[2rem] overflow-hidden bg-slate-50 border border-slate-100 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all"
+              className="group relative aspect-square rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-slate-50 border border-slate-100 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all"
             >
               <Image
                 src={item.image_url}
@@ -111,7 +111,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
             <motion.div 
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 20, opacity: 1 }}
-              className="absolute top-12 md:top-24 inset-x-0 px-8 flex justify-between items-center z-[110]"
+              className="absolute top-8 md:top-24 inset-x-0 px-4 md:px-8 flex justify-between items-center z-[110]"
             >
               <div className="flex items-center gap-4 bg-slate-900/50 backdrop-blur-md p-2 pr-6 rounded-2xl border border-white/10 shadow-2xl">
                  <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
@@ -124,10 +124,10 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
               </div>
 
               <button
-                className="w-14 h-14 rounded-2xl bg-white/10 hover:bg-red-500 border border-white/20 hover:border-red-500 flex items-center justify-center text-white transition-all group backdrop-blur-xl shadow-2xl active:scale-90"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/10 hover:bg-red-500 border border-white/20 hover:border-red-500 flex items-center justify-center text-white transition-all group backdrop-blur-xl shadow-2xl active:scale-90"
                 onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
               >
-                <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
+                <X className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-90 transition-transform duration-500" />
               </button>
             </motion.div>
 
@@ -154,7 +154,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="relative w-full max-w-6xl aspect-[4/3] md:aspect-video rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/5 bg-slate-900/50" 
+              className="relative w-full max-w-6xl aspect-[4/3] md:aspect-video rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/5 bg-slate-900/50" 
               onClick={e => e.stopPropagation()}
             >
               <Image
@@ -176,7 +176,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
                     <span className="px-4 py-1.5 bg-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-4 inline-block border border-primary/30 backdrop-blur-md">
                       {filteredItems[selectedImage].category}
                     </span>
-                    <h2 className="text-white text-2xl md:text-5xl font-black tracking-tighter leading-tight drop-shadow-2xl">
+                    <h2 className="text-white text-xl md:text-5xl font-black tracking-tighter leading-tight drop-shadow-2xl">
                       {filteredItems[selectedImage].title}
                     </h2>
                   </motion.div>

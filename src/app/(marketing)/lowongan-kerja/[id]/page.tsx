@@ -31,7 +31,7 @@ export default async function LowonganDetail({ params }: { params: Promise<{ id:
   const qualificationLines = job.kualifikasi?.split('\n').filter((l: string) => l.trim() !== '') || [];
 
   return (
-    <main className="flex-1 px-4 lg:px-6 py-12 lg:py-20 relative">
+    <main className="flex-1 px-4 lg:px-6 pt-32 md:pt-40 pb-12 lg:py-20 relative">
       <DetailClient 
         job={job} 
         descriptionLines={descriptionLines} 

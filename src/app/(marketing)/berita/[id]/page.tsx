@@ -78,7 +78,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
   const relatedPosts = (related || []).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white overflow-x-hidden selection:bg-primary/20 pt-32 pb-40">
+    <main className="min-h-screen bg-white overflow-x-hidden selection:bg-primary/20 pt-28 md:pt-32 pb-40">
       <style dangerouslySetInnerHTML={{ __html: `
         .article-content {
           font-family: inherit;
@@ -137,7 +137,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
 
       <div className="container max-w-5xl mx-auto px-6 font-sans">
         {/* Header Breadcrumb */}
-        <Link href="/berita" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-primary transition-all mb-12">
+        <Link href="/berita" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-primary transition-all mb-8 md:mb-12">
           <ChevronLeft className="w-4 h-4" />
           Katalog Berita
         </Link>
@@ -151,19 +151,19 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
             <Calendar className="w-3.5 h-3.5" />
             {formatDate(item.published_at || item.created_at)}
           </div>
-          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest pl-4 border-l border-slate-100 whitespace-nowrap">
+          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest md:pl-4 md:border-l border-slate-100 whitespace-nowrap">
             <Clock className="w-3.5 h-3.5" />
             {readingTime} Menit Baca
           </div>
         </div>
 
         {/* Title Section */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight mb-12 text-balance">
+        <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.2] md:leading-[1.1] tracking-tight mb-8 md:mb-12 text-balance">
           {item.title}
         </h1>
 
         {/* Info Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-y border-slate-100 mb-20">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-y border-slate-100 mb-12 md:mb-20">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
               <User className="w-5 h-5" />
@@ -179,8 +179,8 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
 
         {/* Featured Image */}
         {item.image_url && (
-          <div className="mb-24">
-            <div className="relative aspect-[21/9] w-full rounded-[2.5rem] overflow-hidden bg-slate-50 shadow-2xl">
+          <div className="mb-16 md:mb-24">
+            <div className="relative aspect-[4/3] md:aspect-[21/9] w-full rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden bg-slate-50 shadow-2xl">
               <Image 
                 src={item.image_url} 
                 fill 
@@ -206,8 +206,8 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
           />
           
           {/* Tags */}
-          <div className="mt-24 pt-12 border-t border-slate-50">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="mt-16 md:mt-24 pt-8 md:pt-12 border-t border-slate-50">
+            <div className="flex flex-wrap items-center gap-2 text-center md:text-left justify-center md:justify-start">
               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-300 mr-4">Topic Tags:</span>
               {Array.from(new Set(['Berita', 'Wonojati', item.category].filter(Boolean))).map(tag => (
                 <span key={tag} className="px-4 py-2 bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-colors">
@@ -220,8 +220,8 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
-          <section className="mt-40">
-            <div className="flex items-center justify-between mb-12">
+          <section className="mt-24 md:mt-40">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
               <h4 className="text-2xl font-bold text-slate-900 tracking-tight">Berita Lainnya</h4>
               <Link href="/berita" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
                 Semua Berita <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
@@ -251,7 +251,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
       </div>
 
       {/* Decorative Footer Section */}
-      <section className="mt-40 bg-slate-900 py-32 rounded-[4rem] mx-4 relative overflow-hidden">
+      <section className="mt-24 md:mt-40 bg-slate-900 py-20 md:py-32 rounded-[2rem] md:rounded-[4rem] mx-2 md:mx-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,#5ca25a20,transparent_50%)]" />
         <div className="container max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Eksplorasi Keahlian Anda</h2>

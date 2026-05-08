@@ -95,18 +95,19 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
     {
       title: 'BERITA',
       key: 'news',
+      fixed: 'left' as const,
       render: (_: any, record: BeritaItem) => (
         <Flex gap="middle">
-          <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
             {record.image_url ? (
               <Image src={record.image_url} width={48} height={48} className="w-full h-full object-cover" alt={record.title} />
             ) : (
               <FileTextOutlined className="text-slate-300 text-xl" />
             )}
           </div>
-          <div className="flex flex-col max-w-sm">
+          <div className="flex flex-col max-w-[150px] md:max-w-sm">
             <Text strong className="text-slate-900 leading-tight block truncate">{record.title}</Text>
-            <Text type="secondary" className="text-[11px] truncate block">{record.excerpt}</Text>
+            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block">{record.excerpt}</Text>
           </div>
         </Flex>
       ),
@@ -115,6 +116,7 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
       title: 'KATEGORI',
       dataIndex: 'category',
       key: 'category',
+      responsive: ['md' as const],
       render: (category: string) => (
         <Tag color="green" className="font-bold border-none rounded-full px-3 uppercase text-[10px] tracking-widest py-0.5">
           {category}
@@ -150,6 +152,7 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
     {
       title: 'TANGGAL',
       key: 'date',
+      responsive: ['lg' as const],
       render: (_: any, record: BeritaItem) => (
         <Text type="secondary" className="text-xs uppercase font-bold tracking-tighter">
           {new Date(record.published_at || record.created_at).toLocaleDateString("id-ID", {
@@ -162,8 +165,9 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
       title: 'AKSI',
       key: 'action',
       align: 'right' as const,
+      fixed: 'right' as const,
       render: (_: any, record: BeritaItem) => (
-        <Flex gap="small">
+        <Flex gap="small" justify="end">
           <Tooltip title="Edit Artikel">
             <Link href={`/admin/berita/edit/${record.id}`}>
               <Button 
@@ -247,6 +251,7 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
           columns={columns} 
           dataSource={filteredNews} 
           rowKey="id"
+          scroll={{ x: 800 }}
           pagination={{ 
             pageSize: 10,
             placement: ['bottomCenter'],

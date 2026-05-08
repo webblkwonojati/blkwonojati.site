@@ -15,12 +15,11 @@ function PageTransitionContent({ children }: { children: React.ReactNode }) {
     // When pathname or searchParams change, we start the loading state
     setIsPending(true);
     
-    // Small delay to allow the new page content to "settle" in background
-    // and to ensure the animation is visible
+    // Faster delay for a snappier feel while still allowing content to load
     const timer = setTimeout(() => {
       setDisplayChildren(children);
       setIsPending(false);
-    }, 600);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, [pathname, searchParams, children]);
@@ -84,9 +83,10 @@ function PageTransitionContent({ children }: { children: React.ReactNode }) {
 
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="min-h-[50vh]"
       >
         {displayChildren}
       </motion.div>

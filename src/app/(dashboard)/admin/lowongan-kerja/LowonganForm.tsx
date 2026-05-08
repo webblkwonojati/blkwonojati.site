@@ -77,7 +77,7 @@ export default function LowonganForm({ jobData }: { jobData?: any }) {
           htmlType="submit" 
           loading={loading}
           icon={loading ? <LoadingOutlined /> : <SaveOutlined />}
-          className="h-12 px-10 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-2xl shadow-green-500/20 active:scale-95 transition-all"
+          className="h-12 px-10 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-2xl shadow-green-500/20 active:scale-95 transition-all w-full md:w-auto"
         >
           {jobData ? 'Update Data' : 'Publish Vacancy'}
         </Button>
@@ -97,7 +97,7 @@ export default function LowonganForm({ jobData }: { jobData?: any }) {
         <div className="lg:col-span-4 space-y-6">
           <Card 
             className="rounded-[2.5rem] border-slate-50 shadow-2xl shadow-slate-200/40 overflow-hidden" 
-            styles={{ body: { padding: '32px' } }}
+            styles={{ body: { padding: '24px md:32px' } }}
           >
             <div className="space-y-8">
               <div>
@@ -151,7 +151,7 @@ export default function LowonganForm({ jobData }: { jobData?: any }) {
         <div className="lg:col-span-8">
           <Card 
             className="rounded-[2.5rem] border-slate-50 shadow-2xl shadow-slate-200/40" 
-            styles={{ body: { padding: '40px' } }}
+            styles={{ body: { padding: '24px md:40px' } }}
           >
             <div className="space-y-10">
               <div className="space-y-4">

@@ -23,7 +23,7 @@ export default async function Galeri() {
 
   return (
     <main className="flex-1 bg-transparent w-full min-h-screen selection:bg-primary/10">
-      <div className="pt-32 pb-24 px-6 md:px-12">
+      <div className="pt-28 md:pt-32 pb-24 px-6 md:px-12">
         <div className="mx-auto max-w-7xl">
           <SectionHeader 
             withBreadcrumbs

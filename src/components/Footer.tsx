@@ -65,8 +65,8 @@ export default function Footer() {
       <div className="absolute inset-0 z-1 bg-gradient-to-t from-[#1a3a1a] via-[#1a3a1a]/95 to-[#1a3a1a]/85" />
 
       {/* Content Container */}
-      <div className="relative z-10 mx-auto max-w-7xl pt-20 pb-12 px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
+      <div className="relative z-10 mx-auto max-w-7xl pt-16 md:pt-20 pb-12 px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-12 lg:gap-16 mb-12 md:mb-16">
 
           {/* Brand Column */}
           <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left gap-6">
@@ -96,7 +96,7 @@ export default function Footer() {
                 <a
                   key={i}
                   href={social.href}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white hover:text-primary hover:border-primary hover:bg-white/10 transition-all shadow-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white hover:text-primary hover:border-primary hover:bg-white/10 transition-all shadow-xl active:scale-90"
                 >
                   {social.icon}
                 </a>
@@ -143,7 +143,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-8 md:pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col md:flex-row items-center gap-4">
             <p className="text-[9px] font-bold text-slate-400 tracking-[0.2em] text-center md:text-left">
               2026 © All Rights Reserved by UPT BLK Wonojati

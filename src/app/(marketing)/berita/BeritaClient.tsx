@@ -97,13 +97,13 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
             className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-200 bg-white text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-sm"
           />
         </div>
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap gap-2">
+        {/* Category Filter Pills - Scrollable on Mobile */}
+        <div className="flex flex-nowrap overflow-x-auto gap-2 pb-4 no-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
           {["Semua", ...categories].map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all active:scale-95 ${activeCategory === cat
+              className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shrink-0 ${activeCategory === cat
                   ? "bg-primary text-white shadow-md shadow-primary/25"
                   : "bg-white text-slate-500 border border-slate-200 hover:border-primary/40 hover:text-primary"
                 }`}
@@ -123,7 +123,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
           className="mb-12"
         >
           <Link href={`/berita/${heroArticle.id}`} className="group block">
-            <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden bg-slate-100 shadow-xl">
+            <div className="relative w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl overflow-hidden bg-slate-100 shadow-xl">
               {heroArticle.image_url ? (
                 <Image
                   src={heroArticle.image_url}
@@ -138,8 +138,8 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                   <Newspaper className="w-16 h-16" />
                 </div>
               )}
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+              {/* Deepened Gradient overlay for better contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
               {/* Text overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
                 <div className="flex items-center gap-3 mb-3">
@@ -150,11 +150,11 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                     {formatDate(heroArticle.published_at || heroArticle.created_at)}
                   </span>
                 </div>
-                <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight max-w-3xl group-hover:text-primary-foreground transition-colors mb-3">
-                  {heroArticle.title}
+                <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-white leading-tight md:leading-[1.1] max-w-3xl group-hover:text-primary transition-colors mb-3 tracking-tight">
+                   {heroArticle.title}
                 </h2>
-                <p className="text-white/70 text-sm md:text-base line-clamp-2 max-w-2xl">
-                  {heroArticle.excerpt}
+                <p className="text-white/80 text-xs md:text-base line-clamp-1 md:line-clamp-2 max-w-2xl font-medium">
+                   {heroArticle.excerpt}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-white text-sm font-bold group-hover:gap-3 transition-all">
                   Baca Selengkapnya <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -195,7 +195,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                     )}
                   </div>
                   {/* Body */}
-                  <div className="p-6">
+                  <div className="p-5 md:p-6">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/5 px-2.5 py-1 rounded-md">
                         {item.category || "Berita"}

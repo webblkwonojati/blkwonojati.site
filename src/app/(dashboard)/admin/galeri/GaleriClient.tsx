@@ -101,9 +101,10 @@ export default function GaleriClient({ initialData }: { initialData: GaleriItem[
       title: "Pratinjau",
       dataIndex: "image_url",
       key: "image_url",
-      width: 120,
+      width: 100,
+      fixed: 'left' as const,
       render: (url: string) => (
-        <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-100 bg-slate-50 shadow-sm">
+        <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border border-slate-100 bg-slate-50 shadow-sm">
           <Image 
             src={url} 
             alt="Preview" 
@@ -130,6 +131,7 @@ export default function GaleriClient({ initialData }: { initialData: GaleriItem[
       title: "Tanggal Post",
       dataIndex: "created_at",
       key: "created_at",
+      responsive: ['md' as const],
       render: (date: string) => (
         <Text className="text-xs font-bold text-slate-400">
           {new Date(date).toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -139,15 +141,16 @@ export default function GaleriClient({ initialData }: { initialData: GaleriItem[
     {
       title: "Aksi",
       key: "action",
-      width: 150,
+      width: 120,
       align: "right" as const,
+      fixed: 'right' as const,
       render: (_: any, record: GaleriItem) => (
         <div className="flex justify-end gap-2">
           <Button 
             icon={<ExternalLink className="w-4 h-4" />} 
             href={record.image_url} 
             target="_blank"
-            className="rounded-xl border-slate-200 text-slate-400 hover:text-primary"
+            className="rounded-xl border-slate-200 text-slate-400 hover:text-primary flex items-center justify-center p-0 w-9 h-9"
           />
           <Popconfirm
             title="Hapus foto?"
@@ -161,7 +164,7 @@ export default function GaleriClient({ initialData }: { initialData: GaleriItem[
             <Button 
               danger 
               icon={<Trash2 className="w-4 h-4" />} 
-              className="rounded-xl border-red-100 bg-red-50/50"
+              className="rounded-xl border-red-100 bg-red-50/50 flex items-center justify-center p-0 w-9 h-9"
             />
           </Popconfirm>
         </div>
@@ -216,6 +219,7 @@ export default function GaleriClient({ initialData }: { initialData: GaleriItem[
             columns={columns} 
             dataSource={filteredData} 
             rowKey="id"
+            scroll={{ x: 600 }}
             pagination={{ 
               pageSize: 10,
               className: "px-6 pb-4",

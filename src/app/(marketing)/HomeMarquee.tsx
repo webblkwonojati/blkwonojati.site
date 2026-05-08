@@ -17,7 +17,7 @@ export default function HomeMarquee({ programs }: { programs: Program[] }) {
   return (
     <section className="py-24 px-6 bg-transparent overflow-hidden relative">
       {/* Ambient Gradient Decoration */}
-      <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] opacity-30 pointer-events-none z-0">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] opacity-20 pointer-events-none z-0">
         <img src="/gradien-1.png" alt="" loading="lazy" aria-hidden="true" className="w-full h-full object-contain animate-pulse duration-[12s]" />
       </div>
       
@@ -71,7 +71,7 @@ export default function HomeMarquee({ programs }: { programs: Program[] }) {
                     <span className="material-symbols-outlined text-2xl">{p.icon}</span>
                   </div>
 
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">{p.category}</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">{p.category}</span>
                   <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-6 group-hover/card:text-primary transition-colors leading-tight tracking-tight">
                     {p.title}
                   </h3>

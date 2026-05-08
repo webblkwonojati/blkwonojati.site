@@ -111,26 +111,26 @@ export default function BeritaForm({ initialData, mode }: BeritaFormProps) {
              </Button>
           </Link>
           <div className="flex items-center gap-4">
-             <div className="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center text-primary border border-green-100">
-               <FileTextOutlined className="text-2xl" />
+             <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-green-50 flex items-center justify-center text-primary border border-green-100 shrink-0">
+               <FileTextOutlined className="text-xl md:text-2xl" />
              </div>
              <div>
-               <Title level={2} className="!m-0 !font-black !tracking-tight">
+               <Title level={4} className="md:!text-2xl !m-0 !font-black !tracking-tight">
                  {mode === "add" ? "Tulis Artikel" : "Edit Artikel"}
                </Title>
-               <Text type="secondary">Kelola konten berita dan pengumuman BLK Wonojati.</Text>
+               <Text type="secondary" className="text-xs">Kelola konten berita dan pengumuman BLK Wonojati.</Text>
              </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <Button 
               disabled={isSubmitting}
               onClick={() => {
                 form.setFieldsValue({ status: 'draft' });
                 form.submit();
               }}
-              className="rounded-2xl h-12 px-6 font-bold"
+              className="rounded-2xl h-12 px-6 font-bold flex-1 sm:flex-initial"
             >
               Simpan Draft
             </Button>
@@ -139,11 +139,9 @@ export default function BeritaForm({ initialData, mode }: BeritaFormProps) {
               size="large"
               loading={isSubmitting}
               onClick={() => {
-                // We REMOVED the setFieldsValue({ status: 'published' }) here
-                // to respect the status chosen in the sidebar during edits.
                 form.submit();
               }}
-              className="h-12 px-8 rounded-2xl shadow-xl shadow-green-500/20 font-black uppercase tracking-widest text-xs"
+              className="h-12 px-8 rounded-2xl shadow-xl shadow-green-500/20 font-black uppercase tracking-widest text-xs flex-1 sm:flex-initial"
             >
               {mode === "add" ? "Terbitkan" : "Simpan Perubahan"}
             </Button>

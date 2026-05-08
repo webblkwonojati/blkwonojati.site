@@ -1,15 +1,17 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import HomeHero from "./HomeHero";
 import { Metadata } from "next";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 // Dynamic imports for below-the-fold components
-const HomeVideo = dynamic(() => import("./HomeVideo"));
-const HomeMarquee = dynamic(() => import("./HomeMarquee"));
-const HomeTestimonials = dynamic(() => import("./HomeTestimonials"));
-const HomeCTA = dynamic(() => import("./HomeCTA"));
-const HomeFAQ = dynamic(() => import("./HomeFAQ"));
-const HomeLogos = dynamic(() => import("./HomeLogos"));
-const HomeInstagram = dynamic(() => import("./HomeInstagram"));
+const HomeVideo = nextDynamic(() => import("./HomeVideo"));
+const HomeMarquee = nextDynamic(() => import("./HomeMarquee"));
+const HomeTestimonials = nextDynamic(() => import("./HomeTestimonials"));
+const HomeCTA = nextDynamic(() => import("./HomeCTA"));
+const HomeFAQ = nextDynamic(() => import("./HomeFAQ"));
+const HomeLogos = nextDynamic(() => import("./HomeLogos"));
+const HomeInstagram = nextDynamic(() => import("./HomeInstagram"));
+const HomeNews = nextDynamic(() => import("./HomeNews"));
 
 export const metadata: Metadata = {
   title: "Beranda",
@@ -31,10 +33,21 @@ const programs = [
   { title: "Pengoperasian Traktor", icon: "agriculture", category: "Pertanian" },
 ];
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  // Fetch latest 3 news for the spoiler
+  const { data: latestNews } = await supabaseAdmin
+    .from("berita")
+    .select("id, title, excerpt, image_url, category, published_at")
+    .not("published_at", "is", null)
+    .order("published_at", { ascending: false })
+    .limit(3);
+
   return (
     <main className="w-full bg-transparent relative">
       <HomeHero />
+      <HomeNews news={latestNews || []} />
       <HomeVideo />
       <HomeMarquee programs={programs} />
       <HomeTestimonials />

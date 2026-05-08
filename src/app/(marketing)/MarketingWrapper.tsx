@@ -33,13 +33,13 @@ export default function MarketingWrapper({ children }: { children: React.ReactNo
         </>
       )}
 
+      {!isAuthPage && <Navbar />}
       <PageTransition>
-        {!isAuthPage && <Navbar />}
         <main className="flex-1 relative z-10 font-sans">
           {children}
         </main>
-        {!isAuthPage && <Footer />}
       </PageTransition>
+      {!isAuthPage && <Footer />}
     </div>
   );
 }
