@@ -36,21 +36,23 @@ export default function SectionHeader({
     >
       {withBreadcrumbs && <Breadcrumbs />}
       {badge && (
-        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary block">
+        <motion.span 
+          variants={fadeInUp}
+          className="inline-block py-1 px-3 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
+        >
           {badge}
-        </span>
+        </motion.span>
       )}
       <h2 className={cn(
-        "text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight",
+        "text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter leading-none font-display",
       )}>
         {title}
       </h2>
       {description && (
-        <p className="text-slate-500 text-lg leading-relaxed">
+        <p className="text-slate-500 text-lg leading-relaxed font-medium">
           {description}
         </p>
       )}
-      {align === "left" && <div className="w-16 h-1 bg-primary rounded-full mt-2"></div>}
     </motion.div>
   );
 }

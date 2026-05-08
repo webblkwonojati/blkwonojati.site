@@ -8,13 +8,13 @@ declare module "next-auth" {
     user: {
       /** The user's postal address. */
       id: string;
-      role: "admin" | "siswa" | "perusahaan";
+      role: "admin";
       nik?: string;
     } & DefaultSession["user"]
   }
 
   interface User {
-    role: "admin" | "siswa" | "perusahaan";
+    role: "admin";
     nik?: string;
   }
 }
@@ -26,7 +26,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     /** OpenID ID Token */
     id: string;
-    role: "admin" | "siswa" | "perusahaan";
+    role: "admin";
     nik?: string;
   }
 }

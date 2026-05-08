@@ -28,25 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .eq("id", user.id)
           .single();
 
-        if (!profile) return null;
-
-        // 3. For Companies, check if verified (optional: allow login but limit access)
-        if (profile.role === 'perusahaan') {
-          const { data: company } = await supabase
-            .from("companies")
-            .select("is_verified")
-            .eq("id", user.id)
-            .single();
-          
-          // Attach verification status to user info
-          return {
-            id: user.id,
-            email: user.email,
-            name: profile.full_name,
-            role: profile.role,
-            is_verified: company?.is_verified ?? false,
-          };
-        }
+        if (!profile || profile.role !== 'admin') return null;
 
         return {
           id: user.id,

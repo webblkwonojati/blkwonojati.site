@@ -2,6 +2,9 @@
 
 AgriLearn adalah platform landing page untuk UPT BLK Wonojati yang menghubungkan peserta pelatihan dengan peluang industri agribisnis dan lowongan kerja.
 
+> [!TIP]
+> **AI Agent Context**: Jika Anda adalah agen AI, silakan baca [AGRILEARN_AI_CONTEXT.md](./AGRILEARN_AI_CONTEXT.md) untuk memahami arsitektur dan struktur projek ini secara mendalam.
+
 ## 🚀 Fitur Utama
 - **Landing Page Informatif**: Informasi program studi dan profil BLK.
 - **Manajemen Lowongan**: Admin panel untuk mengelola lowongan kerja.

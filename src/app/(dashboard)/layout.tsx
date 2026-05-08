@@ -1,12 +1,21 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import Header from "@/components/dashboard/Header";
 import { SidebarProvider } from "@/context/SidebarContext";
+import PageTransition from "@/components/PageTransition";
 
-export default function DashboardLayout({
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
+  if (!session || (session.user as any).role !== "admin") {
+    redirect("/login");
+  }
   return (
     <SidebarProvider>
       <div className="flex bg-slate-50 min-h-screen">
@@ -21,11 +30,13 @@ export default function DashboardLayout({
           <div className="p-4 md:p-8 relative flex-1">
             {/* Subtle Grid Background */}
             <div className="absolute inset-0 -z-0 pointer-events-none opacity-[0.03]" 
-                 style={{ backgroundImage: 'radial-gradient(#fc703d 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+                 style={{ backgroundImage: 'radial-gradient(#5ca25a 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
             </div>
             
             <div className="relative z-10 h-full">
-              {children}
+              <PageTransition>
+                {children}
+              </PageTransition>
             </div>
           </div>
         </main>

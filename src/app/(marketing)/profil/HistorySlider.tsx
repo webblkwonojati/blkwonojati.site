@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+// Hoisted static data
+const IMAGES = ["/about1.jpg", "/about2.jpg"];
+
 export default function HistorySlider() {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = ["/about1.jpg", "/about2.jpg"];
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
+      setCurrentImage((prev) => (prev + 1) % IMAGES.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
@@ -30,7 +32,7 @@ export default function HistorySlider() {
           className="absolute inset-0 h-full w-full"
         >
           <Image
-            src={images[currentImage]}
+            src={IMAGES[currentImage]}
             fill
             className="object-cover"
             alt={`History image ${currentImage + 1}`}
@@ -41,7 +43,7 @@ export default function HistorySlider() {
 
       {/* Slider Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {images.map((_, i) => (
+        {IMAGES.map((_, i: number) => (
           <div
             key={i}
             className={`h-1.5 rounded-full transition-all duration-500 ${currentImage === i ? "w-8 bg-white" : "w-1.5 bg-white/40"}`}

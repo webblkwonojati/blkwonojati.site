@@ -2,7 +2,19 @@
 
 import { useState } from 'react';
 import { addLink, toggleLinkActive, deleteLink, editLink, updateProfile } from './actions';
-import { Globe, MessageSquare, Share2, ExternalLink } from 'lucide-react';
+import { 
+  Globe, 
+  MessageSquare, 
+  Share2, 
+  ExternalLink, 
+  Plus, 
+  GripVertical, 
+  Eye, 
+  EyeOff, 
+  Pencil, 
+  Trash2,
+  Info
+} from 'lucide-react';
 
 const IconMap: Record<string, any> = {
   globe: Globe,
@@ -145,16 +157,16 @@ export default function LinkManagerClient({
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         
         {/* Tab Switcher */}
-        <div className="flex border-b mb-6">
+        <div className="flex border-b mb-6 border-slate-100">
           <button 
             onClick={() => setActiveTab('links')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${activeTab === 'links' ? 'border-[#13ec49] text-[#13ec49]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all ${activeTab === 'links' ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
           >
-            Links
+            Manage Links
           </button>
           <button 
             onClick={() => setActiveTab('profile')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${activeTab === 'profile' ? 'border-[#13ec49] text-[#13ec49]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all ${activeTab === 'profile' ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
           >
             Profile & Theme
           </button>
@@ -162,22 +174,25 @@ export default function LinkManagerClient({
 
         {activeTab === 'links' ? (
           <>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold">Your Links</h2>
+            <div className="flex justify-between items-center mb-10">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase">Daftar Tautan</h2>
+                <p className="text-sm text-slate-500 font-medium">Kelola semua tombol navigasi cepat untuk halaman publik.</p>
+              </div>
               <div className="flex gap-3">
                 <a 
                   href="http://localhost:3001" 
                   target="_blank" 
-                  className="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 flex items-center gap-2 font-medium border border-slate-200"
+                  className="h-12 px-6 rounded-2xl border border-slate-200 bg-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all"
                 >
-                  <span className="material-symbols-outlined">open_in_new</span>
-                  View Live Page
+                  <ExternalLink className="w-4 h-4" />
+                  View Live
                 </a>
                 <button 
                   onClick={() => { setIsAdding(true); setEditingId(null); setFormState({title: '', url: '', icon: ''}); }}
-                  className="bg-[#13ec49] text-white px-4 py-2 rounded-lg hover:bg-[#11d842] flex items-center gap-2 font-medium shadow-sm shadow-primary/20"
+                  className="h-12 px-6 rounded-2xl bg-primary text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-green-500/20 active:scale-95 transition-all"
                 >
-                  <span className="material-symbols-outlined">add</span>
+                  <Plus className="w-4 h-4" />
                   Add Link
                 </button>
               </div>
@@ -207,8 +222,8 @@ export default function LinkManagerClient({
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <button type="submit" className="bg-[#13ec49] text-white px-6 py-2 rounded-md font-bold">Save Link</button>
-                  <button type="button" onClick={() => { setIsAdding(false); setEditingId(null); }} className="bg-slate-200 px-6 py-2 rounded-md font-medium">Cancel</button>
+                  <button type="submit" className="h-11 px-6 rounded-xl bg-primary text-white font-black uppercase text-[10px] tracking-widest shadow-lg shadow-green-500/20 active:scale-95 transition-all">Save Link</button>
+                  <button type="button" onClick={() => { setIsAdding(false); setEditingId(null); }} className="h-11 px-6 rounded-xl bg-slate-100 text-slate-500 font-bold uppercase text-[10px] tracking-widest hover:bg-slate-200 transition-all">Cancel</button>
                 </div>
               </form>
             )}
@@ -218,7 +233,9 @@ export default function LinkManagerClient({
               {links.map((link) => (
                  <div key={link.id} className={`flex items-center justify-between p-4 border rounded-xl hover:shadow-md transition-all ${!link.is_active ? 'opacity-50 grayscale bg-slate-50' : 'bg-white border-slate-200'}`}>
                    <div className="flex items-center gap-4">
-                     <div className="material-symbols-outlined text-slate-300 cursor-grab">drag_indicator</div>
+                      <div className="cursor-grab p-1 text-slate-300 hover:text-slate-400">
+                        <GripVertical className="w-5 h-5" />
+                      </div>
                      <div>
                         <p className="font-bold text-slate-800 flex items-center gap-2">
                           {link.id && link.icon && (
@@ -245,14 +262,14 @@ export default function LinkManagerClient({
                      </div>
                    </div>
                    <div className="flex items-center gap-1">
-                     <button onClick={() => handleToggle(link.id, link.is_active)} className={`p-2 rounded-lg transition-colors ${link.is_active ? 'text-[#13ec49] hover:bg-[#13ec49]/10' : 'text-slate-400 hover:bg-slate-200'}`} title="Toggle Visibility">
-                       <span className="material-symbols-outlined">{link.is_active ? 'visibility' : 'visibility_off'}</span>
+                     <button onClick={() => handleToggle(link.id, link.is_active)} className={`p-2 rounded-lg transition-colors ${link.is_active ? 'text-emerald-500 hover:bg-emerald-50' : 'text-slate-400 hover:bg-slate-200'}`} title="Toggle Visibility">
+                       {link.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                      </button>
                      <button onClick={() => startEditing(link)} className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
-                       <span className="material-symbols-outlined">edit</span>
+                       <Pencil className="w-4 h-4" />
                      </button>
                      <button onClick={() => handleDelete(link.id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                       <span className="material-symbols-outlined">delete</span>
+                       <Trash2 className="w-4 h-4" />
                      </button>
                    </div>
                  </div>
@@ -398,12 +415,14 @@ export default function LinkManagerClient({
       </div>
 
       {/* FOOTER INFO */}
-      <div className="bg-primary/5 border border-primary/20 p-4 rounded-xl flex items-center gap-4">
-        <span className="material-symbols-outlined text-primary">info</span>
-        <p className="text-sm text-slate-700">
+      <div className="bg-primary/5 border border-primary/10 p-5 rounded-[2rem] flex items-start gap-4">
+        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <Info className="w-5 h-5 text-primary" />
+        </div>
+        <p className="text-sm text-slate-600 font-medium leading-relaxed">
           Semua perubahan di sini akan otomatis sinkron dengan Linktree publik Anda di 
           <a href="http://localhost:3001" target="_blank" className="font-bold text-primary hover:underline ml-1">upt-blk-wonojati</a>. 
-          Anda dapat melihat hasilnya langsung dengan mengklik tombol "View Live Page".
+          Anda dapat melihat hasilnya langsung dengan mengklik tombol "View Live".
         </p>
       </div>
     </div>

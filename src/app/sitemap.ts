@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { supabaseAdmin } from "@/lib/supabase-admin"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://agrilearn.id'
+  const baseUrl = 'https://blkwonojati.site'
 
   // Fetch all active jobs for dynamic sitemap
   const { data: jobs } = await supabaseAdmin

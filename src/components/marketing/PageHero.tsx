@@ -35,7 +35,7 @@ export default function PageHero({
             {badge && (
               <motion.span 
                 variants={fadeInUp}
-                className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-4 block"
+                className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-4 block"
               >
                 {badge}
               </motion.span>

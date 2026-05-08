@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin as supabase } from '@/lib/supabase-admin';
 import { revalidatePath } from 'next/cache';
 import { deleteFromGithub } from '@/lib/github';
 
@@ -30,13 +30,17 @@ export async function addLowongan(formData: FormData) {
   const jurusan = formData.get('jurusan') as string;
 
   const batas_lamaran = batas_lamaran_raw ? new Date(batas_lamaran_raw).toISOString() : null;
+  const is_active_raw = formData.get('is_active') as string;
+  const is_active = is_active_raw === 'true';
 
-  const { error } = await supabase
+  const { data: newJob, error } = await supabase
     .from('lowongan_kerja')
     .insert([{ 
       posisi, instansi_perusahaan, lokasi, tipe_pekerjaan, deskripsi, 
-      kualifikasi, link_pendaftaran, is_active: true, batas_lamaran, poster_url, jurusan 
-    }]);
+      kualifikasi, link_pendaftaran, is_active, batas_lamaran, poster_url, jurusan 
+    }])
+    .select('id')
+    .single();
 
   if (error) {
     console.error('Error adding lowongan:', error);
@@ -44,6 +48,8 @@ export async function addLowongan(formData: FormData) {
   }
 
   revalidatePath('/lowongan-kerja');
+  if (newJob?.id) revalidatePath(`/lowongan-kerja/${newJob.id}`);
+  revalidatePath('/', 'layout');
   return { success: true };
 }
 
@@ -59,6 +65,8 @@ export async function toggleLowonganActive(id: string, currentStatus: boolean) {
   }
 
   revalidatePath('/lowongan-kerja');
+  revalidatePath(`/lowongan-kerja/${id}`);
+  revalidatePath('/', 'layout');
   return { success: true };
 }
 
@@ -76,12 +84,14 @@ export async function editLowongan(formData: FormData) {
   const jurusan = formData.get('jurusan') as string;
 
   const batas_lamaran = batas_lamaran_raw ? new Date(batas_lamaran_raw).toISOString() : null;
+  const is_active_raw = formData.get('is_active') as string;
+  const is_active = is_active_raw === 'true';
 
   const { error } = await supabase
     .from('lowongan_kerja')
     .update({ 
       posisi, instansi_perusahaan, lokasi, tipe_pekerjaan, deskripsi, 
-      kualifikasi, link_pendaftaran, batas_lamaran, poster_url, jurusan 
+      kualifikasi, link_pendaftaran, batas_lamaran, poster_url, jurusan, is_active 
     })
     .eq('id', id);
 
@@ -91,6 +101,8 @@ export async function editLowongan(formData: FormData) {
   }
 
   revalidatePath('/lowongan-kerja');
+  revalidatePath(`/lowongan-kerja/${id}`);
+  revalidatePath('/', 'layout');
   return { success: true };
 }
 
@@ -132,6 +144,7 @@ export async function deleteLowongan(id: string) {
   }
 
   revalidatePath('/lowongan-kerja');
+  revalidatePath('/', 'layout');
   return { success: true };
 }
 

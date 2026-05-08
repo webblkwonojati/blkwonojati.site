@@ -3,29 +3,26 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { 
+  LayoutDashboard, 
+  Newspaper, 
+  Link2, 
+  Briefcase, 
+  Settings,
+  Globe,
+  User as UserIcon,
+  Image as ImageIcon
+} from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
 import { cn } from "@/lib/utils";
 
 const adminNavItems = [
-  { icon: "dashboard", label: "Dashboard", href: "/admin" },
-  { icon: "person_add", label: "Peserta Pelatihan", href: "/admin/peserta" },
-  { icon: "group", label: "Pelamar Lowongan", href: "/admin/pelamar" },
-  { icon: "link", label: "Linktree Manager", href: "/admin/links" },
-  { icon: "work", label: "Lowongan Kerja", href: "/admin/lowongan-kerja" },
-  { icon: "settings", label: "Settings", href: "/admin/settings" },
-];
-
-const perusahaanNavItems = [
-  { icon: "dashboard", label: "Dashboard", href: "/dashboard-perusahaan" },
-  { icon: "work", label: "Kelola Loker", href: "/dashboard-perusahaan/loker" },
-  { icon: "group", label: "Pelamar", href: "/dashboard-perusahaan/pelamar" },
-];
-
-const siswaNavItems = [
-  { icon: "dashboard", label: "Dashboard", href: "/dashboard-siswa" },
-  { icon: "person", label: "Profil Saya", href: "/dashboard-siswa/profil" },
-  { icon: "bookmark", label: "Lowongan Simpan", href: "/dashboard-siswa/simpan" },
-  { icon: "work_history", label: "Lamaran Saya", href: "/dashboard-siswa/lamaran" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
+  { icon: Newspaper, label: "Berita & Artikel", href: "/admin/berita" },
+  { icon: ImageIcon, label: "Galeri Dokumentasi", href: "/admin/galeri" },
+  { icon: Link2, label: "Linktree Manager", href: "/admin/links" },
+  { icon: Briefcase, label: "Lowongan Kerja", href: "/admin/lowongan-kerja" },
+  { icon: Settings, label: "Kejuruan", href: "/admin/kejuruan" },
 ];
 
 export default function Sidebar() {
@@ -34,15 +31,8 @@ export default function Sidebar() {
   const { isOpen, setIsOpen, toggle } = useSidebar();
   const role = (session?.user as any)?.role;
 
-  const getNavItems = () => {
-    if (role === "admin") return adminNavItems;
-    if (role === "perusahaan") return perusahaanNavItems;
-    if (role === "siswa") return siswaNavItems;
-    return [];
-  };
-
-  const navItems = getNavItems();
-  const portalLabel = role === "admin" ? "Admin Portal" : role === "perusahaan" ? "Partner Portal" : "Student Portal";
+  const navItems = adminNavItems;
+  const portalLabel = "Admin Portal";
 
   return (
     <>
@@ -92,10 +82,10 @@ export default function Sidebar() {
                     : "text-slate-500 hover:bg-slate-50 hover:text-accent"
                 )}
               >
-                <span className={cn(
-                  "material-symbols-outlined text-xl transition-transform group-hover:scale-110",
+                <item.icon className={cn(
+                  "w-5 h-5 transition-transform group-hover:scale-110",
                   isActive ? "text-white" : "text-slate-400 group-hover:text-primary"
-                )}>{item.icon}</span>
+                )} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -106,9 +96,7 @@ export default function Sidebar() {
               href="/"
               className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-slate-400 hover:bg-slate-50 hover:text-primary transition-all group"
             >
-              <span className="material-symbols-outlined text-xl transition-transform group-hover:scale-110">
-                public
-              </span>
+              <Globe className="w-5 h-5 transition-transform group-hover:scale-110" />
               <span>Lihat Website</span>
             </Link>
           </div>
@@ -117,8 +105,8 @@ export default function Sidebar() {
         {/* User Quick Info */}
         <div className="p-4 border-t border-slate-100 bg-slate-50/50">
           <div className="flex items-center gap-3 px-3 py-3">
-             <div className="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center shadow-lg shadow-accent/20">
-               <span className="material-symbols-outlined uppercase">{role?.[0] || 'A'}</span>
+             <div className="w-10 h-10 rounded-xl bg-green-50 text-primary flex items-center justify-center shadow-lg shadow-green-500/10 border border-green-100">
+               <UserIcon className="w-5 h-5" />
              </div>
              <div className="overflow-hidden">
                <p className="text-sm font-bold text-slate-900 truncate">{session?.user?.name}</p>

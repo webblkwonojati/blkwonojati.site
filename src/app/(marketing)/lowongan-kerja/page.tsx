@@ -1,15 +1,18 @@
+import nextDynamic from "next/dynamic";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import FilterLowongan from "./FilterLowongan";
-import AnimatedLowongan from "./AnimatedLowongan";
 import { auth } from "@/auth";
 import { Metadata } from "next";
 import SectionHeader from "@/components/marketing/SectionHeader";
+
+// Dynamic import for below-the-fold content
+const AnimatedLowongan = nextDynamic(() => import("./AnimatedLowongan"));
 export const metadata: Metadata = {
   title: "Lowongan Kerja",
   description: "Temukan berbagai peluang karir dari mitra industri UPT BLK Wonojati khusus untuk alumni dan peserta pelatihan.",
 };
 
-export const revalidate = 60; // Revalidate every minute instead of force-dynamic for better performance
+export const dynamic = 'force-dynamic';
 
 export default async function LowonganKerja({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   // Await searchParams in Next.js 15
@@ -19,10 +22,7 @@ export default async function LowonganKerja({ searchParams }: { searchParams: Pr
   const tipe = params.tipe || '';
   const lokasi = params.lokasi || '';
 
-  // Start auth and jobs query in parallel
-  const authPromise = auth();
-  
-  // Build query (but don't await yet)
+  // Build query
   let query = supabaseAdmin
     .from('lowongan_kerja')
     .select('*')
@@ -34,32 +34,17 @@ export default async function LowonganKerja({ searchParams }: { searchParams: Pr
   if (tipe) query = query.eq('tipe_pekerjaan', tipe);
   if (lokasi) query = query.ilike('lokasi', `%${lokasi}%`);
 
-  // Parallelize auth and jobs
-  const [session, { data: jobs, error }] = await Promise.all([authPromise, query]);
+  const { data: jobs, error } = await query;
 
   if (error) {
     console.error('Error fetching lowongan_kerja:', error);
   }
 
   const validJobs = jobs || [];
-  const isSiswa = session?.user && (session.user as any).role === 'siswa';
-
-  // Fetch bookmarks if logged in as siswa
-  let bookmarkedJobIds: string[] = [];
-  if (isSiswa && session?.user?.id) {
-    const { data: bookmarks } = await supabaseAdmin
-      .from('bookmarks')
-      .select('job_id')
-      .eq('user_id', session.user.id);
-
-    if (bookmarks) {
-      bookmarkedJobIds = bookmarks.map(b => b.job_id);
-    }
-  }
 
   return (
-    <main className="flex-1 bg-white">
-      <section className="pt-32 pb-24 px-6 bg-white">
+    <main className="flex-1 bg-transparent">
+      <section className="pt-32 pb-24 px-6 bg-transparent">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             withBreadcrumbs
@@ -74,9 +59,6 @@ export default async function LowonganKerja({ searchParams }: { searchParams: Pr
 
           <AnimatedLowongan
             jobs={validJobs}
-            isLoggedIn={!!session}
-            isSiswa={!!isSiswa}
-            bookmarkedJobIds={bookmarkedJobIds}
           />
         </div>
       </section>

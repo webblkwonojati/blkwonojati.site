@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/', '/dashboard/'],
     },
-    sitemap: 'https://agrilearn.id/sitemap.xml',
+    sitemap: 'https://blkwonojati.site/sitemap.xml',
   }
 }

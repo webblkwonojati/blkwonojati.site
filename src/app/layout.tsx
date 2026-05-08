@@ -1,14 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Metadata } from "next";
+import { Plus_Jakarta_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import SmoothScroll from "@/components/SmoothScroll";
 import { Providers } from "@/components/Providers";
 
-const inter = Inter({
-  variable: "--font-inter",
+const sans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+const display = Bricolage_Grotesque({
+  variable: "--font-display",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://agrilearn.id",
+    url: "https://blkwonojati.site",
     title: "UPT BLK Wonojati | Pelatihan Kerja & Kompetensi",
     description: "Wujudkan masa depan lewat keterampilan nyata di UPT BLK Wonojati.",
     siteName: "Agrilearn BLK Wonojati",
@@ -41,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={cn("scroll-smooth", inter.variable)}>
+    <html lang="id" className={cn("scroll-smooth", sans.variable, display.variable)} data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -61,8 +64,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "UPT BLK Wonojati",
-              "url": "https://agrilearn.id",
-              "logo": "https://agrilearn.id/logo-blk.png",
+              "url": "https://blkwonojati.site",
+              "logo": "https://blkwonojati.site/logo-blk.png",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Jl. Wonojati No.1",
@@ -85,9 +88,7 @@ export default function RootLayout({
         {/* <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
         
         <Providers>
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
+          {children}
         </Providers>
       </body>
     </html>
