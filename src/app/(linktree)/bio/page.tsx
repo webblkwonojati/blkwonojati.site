@@ -15,6 +15,10 @@ import {
   Info
 } from "lucide-react";
 
+// Force the page to always fetch fresh data (no caching)
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 // The hardcoded global profile ID for the BLK Wonojati Linktree
 const PROFILE_ID = "11111111-1111-1111-1111-111111111111";
 
@@ -40,8 +44,22 @@ export default async function LinktreePage() {
     );
   }
 
-  // Map icons to labels or URL keywords
-  const getIcon = (title: string, url: string) => {
+  // Map icon names to Lucide components
+  const LucideIcons: Record<string, any> = {
+    camera: Camera,
+    video: Video,
+    share: Share2,
+    globe: Globe,
+    message: MessageCircle,
+    mail: Mail,
+    phone: Phone,
+    map: MapPin,
+    info: Info,
+    external: ExternalLink,
+  };
+
+  // Auto-detection fallback
+  const getAutoIcon = (title: string, url: string) => {
     const t = title.toLowerCase();
     const u = url.toLowerCase();
     
@@ -58,12 +76,46 @@ export default async function LinktreePage() {
     return ExternalLink;
   };
 
+  const renderIcon = (link: any) => {
+    const iconValue = link.icon?.trim();
+    
+    if (!iconValue) {
+      const AutoIcon = getAutoIcon(link.title, link.url);
+      return <AutoIcon size={20} />;
+    }
+
+    // 1. Handle Image URL
+    if (iconValue.startsWith('http')) {
+      return <img src={iconValue} alt="" className="w-5 h-5 object-contain" />;
+    }
+
+    // 2. Handle Lucide Icon Name
+    const LucideIcon = LucideIcons[iconValue.toLowerCase()];
+    if (LucideIcon) {
+      return <LucideIcon size={20} />;
+    }
+
+    // 3. Handle Emoji or Raw Text
+    return <span className="text-lg leading-none">{iconValue}</span>;
+  };
+
   const activeLinks = links.filter((l: any) => l.is_active);
+  const bgImage = profile.theme_settings?.background_image;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-4 md:p-8 font-sans selection:bg-black selection:text-white">
-      {/* Background Decor (Vercel Style) */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-4 md:p-8 font-sans selection:bg-black selection:text-white relative overflow-x-hidden">
+      {/* Background Image Layer */}
+      {bgImage && (
+        <div 
+          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        >
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]" />
+        </div>
+      )}
+
+      {/* Background Decor (Vercel Style) - Only show if no bgImage or as additional glow */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-[#0070F3]/5 blur-[120px] rounded-full" />
         <div className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-emerald-500/5 blur-[120px] rounded-full" />
       </div>
@@ -101,7 +153,6 @@ export default async function LinktreePage() {
         <div className="w-full space-y-3.5 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
           {activeLinks.length > 0 ? (
             activeLinks.map((link: any, index: number) => {
-              const Icon = getIcon(link.title, link.url);
               return (
                 <a
                   key={link.id}
@@ -116,7 +167,7 @@ export default async function LinktreePage() {
                 >
                   <div className="flex items-center gap-3.5">
                     <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-50 text-slate-400 group-hover:bg-black group-hover:text-white transition-colors duration-300">
-                      <Icon size={20} />
+                      {renderIcon(link)}
                     </div>
                     <span className="font-semibold text-slate-900 text-[15px]">{link.title}</span>
                   </div>
