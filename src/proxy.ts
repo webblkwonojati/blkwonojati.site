@@ -9,6 +9,11 @@ export default clerkMiddleware(async (auth, req) => {
 
   // 1. Shortlink Subdomain Handling
   if (hostname === "bit.blkwonojati.site" || hostname.startsWith("bit.localhost")) {
+    // If the path already starts with /s/, don't rewrite it again (avoid infinite loop)
+    if (url.pathname.startsWith("/s/")) {
+      return NextResponse.next();
+    }
+    
     const code = url.pathname === "/" ? "" : url.pathname;
     // Rewrite to our internal route /s/[code]
     return NextResponse.rewrite(new URL(`/s${code}`, req.url));
@@ -16,6 +21,10 @@ export default clerkMiddleware(async (auth, req) => {
 
   // 2. Linktree Subdomain Handling
   if (hostname === "bio.wonojati.site" || hostname === "bio.blkwonojati.site" || hostname.startsWith("bio.localhost")) {
+    // If we are already on the /bio path, stop rewriting
+    if (url.pathname === "/bio") {
+      return NextResponse.next();
+    }
     // Rewrite to our internal public linktree route /bio
     return NextResponse.rewrite(new URL(`/bio`, req.url));
   }
