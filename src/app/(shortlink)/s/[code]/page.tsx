@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import PreloaderClient from "./PreloaderClient";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { code: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata> {
   return {
     title: `Mengarahkan... | BLK Wonojati`,
     robots: {
@@ -13,12 +13,15 @@ export async function generateMetadata({ params }: { params: { code: string } })
   }
 }
 
-export default async function ShortlinkPage({ params }: { params: { code: string } }) {
+export default async function ShortlinkPage({ params }: { params: Promise<{ code: string }> }) {
+  // Ambil code dari params (harus di-await di Next.js 15/16)
+  const { code } = await params;
+
   // Ambil data shortlink dari Supabase
   const { data: shortlink, error } = await supabaseAdmin
     .from("shortlinks")
     .select("id, target_url, clicks")
-    .eq("code", params.code)
+    .eq("code", code)
     .single();
 
   // Jika tidak ditemukan, kembalikan halaman 404 Not Found
