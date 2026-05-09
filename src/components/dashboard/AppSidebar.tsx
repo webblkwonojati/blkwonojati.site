@@ -68,7 +68,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 return (
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton 
-                      render={<Link href={item.href} />}
+                      render={
+                        <Link href={item.href}>
+                          <item.icon className={cn("w-4 h-4", isActive ? "text-black" : "text-[#666]")} />
+                          <span>{item.label}</span>
+                        </Link>
+                      }
                       isActive={isActive} 
                       tooltip={item.label}
                       className={cn(
@@ -77,10 +82,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           ? "bg-[#FAFAFA] text-black font-medium" 
                           : "text-[#666] font-normal hover:bg-[#FAFAFA] hover:text-black"
                       )}
-                    >
-                      <item.icon className={cn("w-4 h-4", isActive ? "text-black" : "text-[#666]")} />
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
+                    />
                   </SidebarMenuItem>
                 )
               })}
@@ -94,19 +96,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  render={<Link href="/admin/users" />}
+                  render={
+                    <Link href="/admin/users">
+                      <UsersIcon className={cn("w-4 h-4", pathname === "/admin/users" ? "text-black" : "text-[#666]")} />
+                      <span>User Management</span>
+                    </Link>
+                  }
                   isActive={pathname === "/admin/users"} 
                   tooltip="User Management"
                   className={cn(
                     "h-9 rounded-md px-3 transition-colors text-[14px]",
-                    pathname === "/admin/users" 
+                    pathname === "/admin/users"
                       ? "bg-[#FAFAFA] text-black font-medium" 
                       : "text-[#666] font-normal hover:bg-[#FAFAFA] hover:text-black"
                   )}
-                >
-                  <UsersIcon className={cn("w-4 h-4", pathname === "/admin/users" ? "text-black" : "text-[#666]")} />
-                  <span>User Management</span>
-                </SidebarMenuButton>
+                />
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
