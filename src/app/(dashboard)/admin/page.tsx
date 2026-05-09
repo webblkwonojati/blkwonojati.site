@@ -1,4 +1,5 @@
-import { auth } from "@/auth";
+import { checkRole } from "@/lib/auth";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { 
   Newspaper, 
@@ -17,11 +18,12 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { cn } from "@/lib/utils";
 
 async function getStats() {
-  const [news, jobs, links, gallery] = await Promise.all([
-    supabaseAdmin.from("berita").select("id", { count: "exact" }),
-    supabaseAdmin.from("lowongan").select("id", { count: "exact" }),
-    supabaseAdmin.from("links").select("id", { count: "exact" }),
-    supabaseAdmin.from("galeri").select("id", { count: "exact" }),
+  const [news, jobs, links, gallery, kejuruan] = await Promise.all([
+    supabaseAdmin.from("berita").select("id", { count: "exact", head: true }),
+    supabaseAdmin.from("lowongan_kerja").select("id", { count: "exact", head: true }),
+    supabaseAdmin.from("links").select("id", { count: "exact", head: true }),
+    supabaseAdmin.from("galeri").select("id", { count: "exact", head: true }),
+    supabaseAdmin.from("kejuruan_pelatihan").select("id", { count: "exact", head: true }),
   ]);
 
   return {
@@ -29,13 +31,15 @@ async function getStats() {
     jobsCount: jobs.count || 0,
     linksCount: links.count || 0,
     galleryCount: gallery.count || 0,
+    kejuruanCount: kejuruan.count || 0,
   };
 }
 
 export default async function AdminPage() {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
-    redirect("/login");
+  const [role, user] = await Promise.all([checkRole(), currentUser()]);
+  
+  if (!role) {
+    redirect("/");
   }
 
   const stats = await getStats();
@@ -60,7 +64,7 @@ export default async function AdminPage() {
              </span>
           </div>
           <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none mb-3">
-            Halo, {session.user?.name?.split(' ')[0]} 👋
+            Halo, {user?.firstName || "Admin"} 👋
           </h1>
           <p className="text-slate-500 max-w-xl font-medium">
             Selamat datang di pusat kendali konten AgriLearn. Kelola artikel, lowongan, dan tautan eksternal Anda dari sini.

@@ -46,23 +46,23 @@ const navigation = [
 ];
 
 const socialLinks = [
-  { icon: <InstagramIcon size={18} />, href: "#" },
-  { icon: <FacebookIcon size={18} />, href: "#" },
-  { icon: <YoutubeIcon size={18} />, href: "#" },
-  { icon: <LucideMail size={18} />, href: "mailto:info@blk-wonojati.id" },
+  { icon: <InstagramIcon size={18} />, href: "https://instagram.com", ariaLabel: "Instagram" },
+  { icon: <FacebookIcon size={18} />, href: "https://facebook.com", ariaLabel: "Facebook" },
+  { icon: <YoutubeIcon size={18} />, href: "https://youtube.com", ariaLabel: "YouTube" },
+  { icon: <LucideMail size={18} />, href: "mailto:info@blk-wonojati.id", ariaLabel: "Email" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden mt-20 group">
+    <footer className="relative w-full overflow-hidden group bg-[#1a3a1a] mt-auto">
       {/* Background Image Container */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+        className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-20"
         style={{ backgroundImage: "url('/footer.jpg')" }}
       />
 
-      {/* Dark Overlay with Gradient - Changed to Green Theme */}
-      <div className="absolute inset-0 z-1 bg-gradient-to-t from-[#1a3a1a] via-[#1a3a1a]/95 to-[#1a3a1a]/85" />
+      {/* Dark Overlay with Gradient */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-b from-[#1a3a1a] via-[#1a3a1a]/95 to-[#1a3a1a]" />
 
       {/* Content Container */}
       <div className="relative z-10 mx-auto max-w-7xl pt-16 md:pt-20 pb-12 px-6 lg:px-8">
@@ -96,6 +96,9 @@ export default function Footer() {
                 <a
                   key={i}
                   href={social.href}
+                  aria-label={social.ariaLabel}
+                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white hover:text-primary hover:border-primary hover:bg-white/10 transition-all shadow-xl active:scale-90"
                 >
                   {social.icon}
@@ -150,8 +153,8 @@ export default function Footer() {
             </p>
           </div>
           <div className="flex gap-8 text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-            <a href="#" className="hover:text-white transition-colors">Kebijakan Privasi</a>
-            <a href="#" className="hover:text-white transition-colors">Syarat Ketentuan</a>
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Kebijakan Privasi</Link>
+            <Link href="/bantuan" className="hover:text-white transition-colors">Pusat Bantuan</Link>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 import { 
   LayoutDashboard, 
   Newspaper, 
@@ -11,7 +11,8 @@ import {
   Settings,
   Globe,
   User as UserIcon,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Users as UsersIcon
 } from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
 import { cn } from "@/lib/utils";
@@ -22,14 +23,14 @@ const adminNavItems = [
   { icon: ImageIcon, label: "Galeri Dokumentasi", href: "/admin/galeri" },
   { icon: Link2, label: "Linktree Manager", href: "/admin/links" },
   { icon: Briefcase, label: "Lowongan Kerja", href: "/admin/lowongan-kerja" },
-  { icon: Settings, label: "Kejuruan", href: "/admin/kejuruan" },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { user, isLoaded } = useUser();
   const { isOpen, setIsOpen, toggle } = useSidebar();
-  const role = (session?.user as any)?.role;
+  
+  const role = user?.publicMetadata?.role as string;
 
   const navItems = adminNavItems;
   const portalLabel = "Admin Portal";
@@ -91,6 +92,25 @@ export default function Sidebar() {
             );
           })}
 
+          {/* Conditional Manage Admins for super_admin */}
+          {role === 'super_admin' && (
+            <Link
+              href="/admin/users"
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all group",
+                pathname === "/admin/users"
+                  ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20"
+                  : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+              )}
+            >
+              <UsersIcon className={cn(
+                "w-5 h-5 transition-transform group-hover:scale-110",
+                pathname === "/admin/users" ? "text-white" : "text-slate-400 group-hover:text-slate-900"
+              )} />
+              <span>Kelola Admin</span>
+            </Link>
+          )}
+
           <div className="pt-4 mt-4 border-t border-slate-100">
             <Link
               href="/"
@@ -105,12 +125,18 @@ export default function Sidebar() {
         {/* User Quick Info */}
         <div className="p-4 border-t border-slate-100 bg-slate-50/50">
           <div className="flex items-center gap-3 px-3 py-3">
-             <div className="w-10 h-10 rounded-xl bg-green-50 text-primary flex items-center justify-center shadow-lg shadow-green-500/10 border border-green-100">
-               <UserIcon className="w-5 h-5" />
+             <div className="w-10 h-10 rounded-xl bg-green-50 text-primary flex items-center justify-center shadow-lg shadow-green-500/10 border border-green-100 overflow-hidden shrink-0">
+               {user?.imageUrl ? (
+                 <img src={user.imageUrl} alt={user.fullName || "User"} className="w-full h-full object-cover" />
+               ) : (
+                 <UserIcon className="w-5 h-5" />
+               )}
              </div>
              <div className="overflow-hidden">
-               <p className="text-sm font-bold text-slate-900 truncate">{session?.user?.name}</p>
-               <p className="text-[10px] font-bold text-slate-400 truncate tracking-tight">{session?.user?.email}</p>
+               <p className="text-sm font-bold text-slate-900 truncate">{user?.fullName || user?.username || "Admin"}</p>
+               <p className="text-[10px] font-bold text-slate-400 truncate tracking-tight">
+                 {user?.primaryEmailAddress?.emailAddress || "admin@wonojati.site"}
+               </p>
              </div>
           </div>
         </div>

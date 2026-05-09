@@ -17,7 +17,7 @@ import {
   Input, 
   Modal, 
   Form, 
-  message, 
+  App, 
   Popconfirm,
   Tag,
   Typography,
@@ -39,6 +39,7 @@ interface GaleriItem {
 }
 
 export default function GaleriClient({ initialData }: { initialData: GaleriItem[] }) {
+  const { message } = App.useApp();
   const [data, setData] = useState<GaleriItem[]>(initialData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);

@@ -23,18 +23,30 @@ export const metadata: Metadata = {
   keywords: ["BLK Wonojati", "Pelatihan Kerja", "Kompetensi", "Sertifikasi", "Vokasi", "Malang"],
   authors: [{ name: "UPT BLK Wonojati" }],
   creator: "UPT BLK Wonojati",
+  alternates: {
+    canonical: "https://www.blkwonojati.site",
+  },
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://blkwonojati.site",
+    url: "https://www.blkwonojati.site",
     title: "UPT BLK Wonojati | Pelatihan Kerja & Kompetensi",
     description: "Wujudkan masa depan lewat keterampilan nyata di UPT BLK Wonojati.",
     siteName: "Agrilearn BLK Wonojati",
+    images: [
+      {
+        url: "/BLK-wonojati.webp",
+        width: 1200,
+        height: 630,
+        alt: "Gedung UPT BLK Wonojati",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "UPT BLK Wonojati | Pelatihan Kerja & Kompetensi",
     description: "Pusat Pelatihan Kerja untuk pengembangan kompetensi masa depan.",
+    images: ["/BLK-wonojati.webp"],
   },
 };
 

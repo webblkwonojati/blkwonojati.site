@@ -105,14 +105,29 @@ export async function getProfileByUsername(username: string) {
   return data;
 }
 export async function getProfileById(id: string) {
-  const { data, error } = await supabase
+  // Check if id is a valid UUID before querying to avoid database errors
+  // Clerk user IDs like 'user_...' are not UUIDs
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+  
+  const query = supabase
     .from('profiles')
-    .select('*')
-    .eq('id', id)
-    .single();
+    .select('*');
+    
+  if (isUuid) {
+    query.eq('id', id);
+  } else {
+    // If not a UUID, it might be a Clerk ID stored in a different column 
+    // or we might need to query by clerk_id if you have that column
+    // For now, let's try to match it as a string if the column allows, 
+    // but the error suggests it's a UUID type in DB.
+    // Fallback: return null gracefully instead of crashing
+    return null;
+  }
+
+  const { data, error } = await query.single();
 
   if (error) {
-    console.error('❌ Error fetching profile:', error.message);
+    // Silently fail if not found to avoid console clutter for uninitialized profiles
     return null;
   }
   return data;

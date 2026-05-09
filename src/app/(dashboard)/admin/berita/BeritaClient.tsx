@@ -15,7 +15,7 @@ import {
   Card,
   Badge,
   Empty,
-  message
+  App
 } from "antd";
 import { 
   SearchOutlined, 
@@ -45,6 +45,7 @@ interface BeritaItem {
 }
 
 export default function BeritaClient({ initialData }: { initialData: BeritaItem[] }) {
+  const { message } = App.useApp();
   const [news, setNews] = useState<BeritaItem[]>(initialData);
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -96,18 +97,23 @@ export default function BeritaClient({ initialData }: { initialData: BeritaItem[
       title: 'BERITA',
       key: 'news',
       fixed: 'left' as const,
+      width: 400,
       render: (_: any, record: BeritaItem) => (
-        <Flex gap="middle">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
+        <Flex gap="middle" align="center" className="py-2">
+          <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100 shadow-sm transition-transform group-hover:scale-105">
             {record.image_url ? (
               <Image src={record.image_url} width={48} height={48} className="w-full h-full object-cover" alt={record.title} />
             ) : (
               <FileTextOutlined className="text-slate-300 text-xl" />
             )}
           </div>
-          <div className="flex flex-col max-w-[150px] md:max-w-sm">
-            <Text strong className="text-slate-900 leading-tight block truncate">{record.title}</Text>
-            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block">{record.excerpt}</Text>
+          <div className="flex flex-col min-w-0 pr-4">
+            <Text strong className="text-slate-900 leading-snug block truncate-2-lines whitespace-normal">
+              {record.title}
+            </Text>
+            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block opacity-70">
+              {record.excerpt}
+            </Text>
           </div>
         </Flex>
       ),

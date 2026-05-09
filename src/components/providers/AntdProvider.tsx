@@ -33,7 +33,7 @@ export default function AntdProvider({ children }: { children: React.ReactNode }
   return (
     <AntdRegistry>
       <ConfigProvider theme={theme}>
-        <App>
+        <App className="flex flex-col min-h-screen flex-1 w-full">
           {children}
         </App>
       </ConfigProvider>

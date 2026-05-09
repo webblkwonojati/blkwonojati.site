@@ -1,12 +1,13 @@
 import BeritaForm from "../../BeritaForm";
-import { auth } from "@/auth";
+import { checkRole } from "@/lib/auth";
 import { redirect, notFound } from "next/navigation";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export default async function EditBeritaPage({ params }: { params: Promise<{ id: string }> }) {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
-    redirect("/login");
+  const role = await checkRole();
+  
+  if (!role) {
+    redirect("/");
   }
 
   const { id } = await params;

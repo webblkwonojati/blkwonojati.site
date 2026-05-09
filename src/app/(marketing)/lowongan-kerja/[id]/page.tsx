@@ -1,7 +1,7 @@
 import nextDynamic from "next/dynamic";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { notFound } from "next/navigation";
-import { auth } from "@/auth";
+import { auth } from "@clerk/nextjs/server";
 
 // Dynamic import for client component
 const DetailClient = nextDynamic(() => import("./DetailClient"));

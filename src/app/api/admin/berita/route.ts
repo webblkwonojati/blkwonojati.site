@@ -1,10 +1,11 @@
-import { auth } from "@/auth";
+import { checkRole } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
+  const role = await checkRole();
+
+  if (!role) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -18,8 +19,9 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
+  const role = await checkRole();
+
+  if (!role) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -47,8 +49,9 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
+  const role = await checkRole();
+
+  if (!role) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

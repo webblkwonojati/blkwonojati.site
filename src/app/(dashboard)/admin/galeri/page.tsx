@@ -1,14 +1,15 @@
+import { checkRole } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import GaleriClient from "./GaleriClient";
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminGaleriPage() {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
-    redirect("/login");
+  const role = await checkRole();
+  
+  if (!role) {
+    redirect("/");
   }
 
   const { data: gallery, error } = await supabaseAdmin

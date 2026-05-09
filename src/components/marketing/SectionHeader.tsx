@@ -11,6 +11,7 @@ interface SectionHeaderProps {
   description?: string;
   align?: "left" | "center";
   withBreadcrumbs?: boolean;
+  asH1?: boolean;
   className?: string;
 }
 
@@ -20,6 +21,7 @@ export default function SectionHeader({
   description, 
   align = "left",
   withBreadcrumbs = false,
+  asH1 = false,
   className 
 }: SectionHeaderProps) {
   return (
@@ -43,11 +45,19 @@ export default function SectionHeader({
           {badge}
         </motion.span>
       )}
-      <h2 className={cn(
-        "text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter leading-none font-display",
-      )}>
-        {title}
-      </h2>
+      {asH1 ? (
+        <h1 className={cn(
+          "text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter leading-none font-display",
+        )}>
+          {title}
+        </h1>
+      ) : (
+        <h2 className={cn(
+          "text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter leading-none font-display",
+        )}>
+          {title}
+        </h2>
+      )}
       {description && (
         <p className="text-slate-500 text-lg leading-relaxed font-medium">
           {description}

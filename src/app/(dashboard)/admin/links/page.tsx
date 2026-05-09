@@ -1,10 +1,10 @@
+import { auth } from "@clerk/nextjs/server";
 import { getLinks, getProfileById } from './actions';
 import LinkManagerClient from './LinkManagerClient';
-import { auth } from "@/auth";
 
 export default async function LinksPage() {
-  const session = await auth();
-  const PROFILE_ID = session?.user?.id;
+  const { userId } = await auth();
+  const PROFILE_ID = userId;
   
   if (!PROFILE_ID) {
     return <div>Sesi tidak ditemukan. Silakan login kembali.</div>;

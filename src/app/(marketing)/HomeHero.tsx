@@ -16,7 +16,7 @@ export default function HomeHero() {
         <Image
           src="/hero-blk.jpg"
           fill
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           className="object-cover pointer-events-none opacity-30"
           alt="UPT BLK Wonojati"
           priority
@@ -79,10 +79,10 @@ export default function HomeHero() {
               }
             }}
           >
-            <Title level={1} className="!m-0 !text-4xl md:!text-7xl !font-bold !tracking-tight !leading-[1.1] !text-white text-balance font-display">
+            <h1 className="m-0 text-4xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white text-balance font-display">
               Balai Latihan Kerja <br className="hidden md:block" />
               <span className="text-white">Wonojati Malang</span>
-            </Title>
+            </h1>
           </motion.div>
 
           <motion.p

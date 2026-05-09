@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { 
   Typography, 
@@ -31,7 +32,8 @@ const { Title, Text, Paragraph } = Typography;
 
 import Image from 'next/image';
 
-export default function DetailClient({ job, descriptionLines, qualificationLines, session }: any) {
+export default function DetailClient({ job, descriptionLines, qualificationLines }: any) {
+  const { user, isLoaded } = useUser();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nik, setNik] = useState("");
@@ -45,11 +47,11 @@ export default function DetailClient({ job, descriptionLines, qualificationLines
   }, [job?.id]);
 
   const handleLamarClick = async () => {
-    if (session?.user) {
+    if (user) {
       const res = await recordLowonganApply(job.id, {
-        nik: (session.user as any).nik || 'LOGGED_IN_USER',
-        nama: session.user.name || 'User',
-        email: session.user.email
+        nik: (user.publicMetadata as any).nik || 'LOGGED_IN_USER',
+        nama: user.fullName || user.username || 'User',
+        email: user.primaryEmailAddress?.emailAddress || ''
       });
       if (res.success) {
         window.open(job.link_pendaftaran, '_blank');

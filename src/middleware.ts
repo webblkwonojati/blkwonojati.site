@@ -1,29 +1,25 @@
-import { auth } from "@/auth";
+import { clerkMiddleware, createRouteMatcher, clerkClient } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  const userRole = (req.auth?.user as any)?.role;
+const isProtectedRoot = createRouteMatcher(["/admin(.*)", "/dashboard(.*)"]);
 
-  const isDashboardRoute = nextUrl.pathname.startsWith("/admin") || nextUrl.pathname.startsWith("/dashboard");
-  const isAuthRoute = nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register");
-
-  // 1. Proteksi Halaman Dashboard & Admin
-  if (isDashboardRoute) {
-    if (!isLoggedIn || userRole !== "admin") {
-      return Response.redirect(new URL("/login", nextUrl));
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoot(req)) {
+    const session = await auth();
+    
+    // Redirect to sign-in if not authenticated
+    if (!session.userId) {
+      return session.redirectToSignIn();
     }
-  }
 
-  // 2. Redirect jika Admin sudah login mencoba akses halaman login/register
-  if (isAuthRoute && isLoggedIn && userRole === "admin") {
-    return Response.redirect(new URL("/admin", nextUrl));
-  }
-
-  // 3. Proteksi API Admin
-  if (nextUrl.pathname.startsWith("/api/admin")) {
-    if (!isLoggedIn || userRole !== "admin") {
-      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    // Role-based access control (RBAC)
+    const client = await clerkClient();
+    const user = await client.users.getUser(session.userId);
+    const role = user.publicMetadata?.role as string;
+    
+    // Check if the user has any of the allowed roles for dashboard
+    if (!role || (role !== "admin" && role !== "super_admin")) {
+      return NextResponse.redirect(new URL("/", req.url));
     }
   }
 });

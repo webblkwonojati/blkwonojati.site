@@ -3,7 +3,7 @@ import Header from "@/components/dashboard/Header";
 import { SidebarProvider } from "@/context/SidebarContext";
 import PageTransition from "@/components/PageTransition";
 
-import { auth } from "@/auth";
+import { checkRole } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
@@ -11,10 +11,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const role = await checkRole();
 
-  if (!session || (session.user as any).role !== "admin") {
-    redirect("/login");
+  if (!role) {
+    redirect("/");
   }
   return (
     <SidebarProvider>

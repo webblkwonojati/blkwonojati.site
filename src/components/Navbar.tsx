@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useSession, signOut } from "next-auth/react";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import ButtonPremium from "@/components/ui/ButtonPremium";
 
@@ -27,13 +27,13 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const { data: session, status } = useSession();
+  const { user, isLoaded } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const getDashboardHref = () => {
-    const role = (session?.user as any)?.role;
-    if (role === "admin") return "/admin";
+    const role = user?.publicMetadata?.role as string;
+    if (role === "admin" || role === "super_admin") return "/admin";
     return "/";
   };
 
@@ -118,20 +118,44 @@ export default function Navbar() {
             );
           })}
 
-          <ButtonPremium
-            href="/login"
-            size="sm"
-            icon="east"
-            variant={isTransparent ? "outline" : "primary"}
-            className={cn(isTransparent && "border-white/20 text-white hover:bg-white hover:text-slate-900")}
-          >
-            Masuk Portal
-          </ButtonPremium>
+          {isLoaded && user && (
+            <>
+              <Link 
+                href={getDashboardHref()} 
+                className={cn(
+                  "text-xs font-bold uppercase tracking-widest transition-all",
+                  isTransparent ? "text-white" : "text-slate-900"
+                )}
+              >
+                Dashboard
+              </Link>
+              <UserButton 
+                appearance={{
+                  elements: {
+                    avatarBox: "w-10 h-10 rounded-xl"
+                  }
+                }}
+              />
+            </>
+          )}
+          {isLoaded && !user && (
+            <ButtonPremium
+              href="/login"
+              size="sm"
+              icon="east"
+              variant={isTransparent ? "outline" : "primary"}
+              className={cn(isTransparent && "border-white/20 text-white hover:bg-white hover:text-slate-900")}
+            >
+              Masuk Portal
+            </ButtonPremium>
+          )}
         </div>
 
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(prev => !prev)}
+          aria-label={isMobileMenuOpen ? "Tutup menu" : "Buka menu"}
+          aria-expanded={isMobileMenuOpen}
           className={cn("lg:hidden transition-colors", isTransparent && !isMobileMenuOpen ? "text-white" : "text-slate-900")}
         >
           <span className="material-symbols-outlined text-2xl">
@@ -172,6 +196,7 @@ export default function Navbar() {
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Tutup menu navigasi"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 active:scale-90 transition-all"
                 >
                   <span className="material-symbols-outlined text-xl">close</span>
@@ -222,11 +247,19 @@ export default function Navbar() {
                   transition={{ delay: 0.5 }}
                   className="mt-12"
                 >
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className="w-full h-14 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-900/10 active:scale-95 transition-all">
-                      Masuk Portal
-                    </Button>
-                  </Link>
+                  {isLoaded && user ? (
+                    <Link href={getDashboardHref()} onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button className="w-full h-14 bg-primary text-white rounded-2xl font-bold shadow-xl shadow-primary/10 active:scale-95 transition-all">
+                        Masuk Dashboard
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button className="w-full h-14 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-900/10 active:scale-95 transition-all">
+                        Masuk Portal
+                      </Button>
+                    </Link>
+                  )}
                 </motion.div>
               </nav>
 
@@ -235,13 +268,13 @@ export default function Navbar() {
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono">Connect With Us</p>
                 <div className="flex items-center gap-4">
                    {/* Social shortcuts matching footer style but for sidebar */}
-                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
-                      <span className="material-symbols-outlined text-lg">public</span>
+                   <a href="https://kemnaker.go.id" target="_blank" rel="noopener noreferrer" aria-label="Website Kemnaker" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                      <span className="material-symbols-outlined text-lg" aria-hidden="true">public</span>
                    </a>
-                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
-                      <span className="material-symbols-outlined text-lg">mail</span>
+                   <a href="mailto:info@blkwonojati.site" aria-label="Email Kami" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                      <span className="material-symbols-outlined text-lg" aria-hidden="true">mail</span>
                    </a>
-                   <a href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
+                   <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" aria-label="Hubungi via WhatsApp" className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all">
                       <WhatsAppIcon />
                    </a>
                 </div>

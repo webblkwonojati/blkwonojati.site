@@ -1,21 +1,21 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
-import AuthVisual from "./AuthVisual";
+import AuthVisual from "../login/AuthVisual";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Masuk Akun",
-  description: "Masuk ke portal Agrilearn UPT BLK Wonojati untuk mengakses kursus, lowongan kerja, dan profil Anda.",
+  title: "Registrasi Akun",
+  description: "Daftar akun Agrilearn UPT BLK Wonojati untuk mulai mengakses kursus dan peluang karir.",
 };
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-stretch bg-white font-display">
       {/* Visual Section - Left (Hidden on Mobile) */}
       <AuthVisual 
-        title={<>Membangun Masa Depan <br /><span className="text-primary italic">Terampil & Kompeten.</span></>}
-        imageSrc="/BLK-wonojati.webp"
-        imageAlt="Gedung Workshop UPT BLK Wonojati"
+        title={<>Mulailah Perjalanan <br /><span className="text-primary italic">Karir Anda Bersama Kami.</span></>}
+        imageSrc="/hero-blk.jpg"
+        imageAlt="Mahasiswa Pelatihan UPT BLK Wonojati"
       />
 
       {/* Form Section - Right */}
@@ -32,9 +32,9 @@ export default function LoginPage() {
         </div>
 
         <div className="w-full flex justify-center scale-90 sm:scale-100">
-          <SignIn 
+          <SignUp 
             routing="hash"
-            signUpUrl="/register"
+            signInUrl="/login"
             appearance={{
               elements: {
                 formButtonPrimary: "bg-[#5ca25a] hover:bg-[#4a8a48] text-sm font-black uppercase tracking-widest rounded-xl",

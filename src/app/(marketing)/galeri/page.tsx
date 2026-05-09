@@ -22,20 +22,19 @@ export default async function Galeri() {
   const categories = ["Semua", ...Array.from(new Set((items || []).map(item => item.category)))];
 
   return (
-    <main className="flex-1 bg-transparent w-full min-h-screen selection:bg-primary/10">
-      <div className="pt-28 md:pt-32 pb-24 px-6 md:px-12">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader 
-            withBreadcrumbs
-            badge="Moment & Dokumentasi"
-            title="Koleksi Galeri Kami"
-            description="Melihat cuplikan proses pelatihan, fasilitas workshop, dan berbagai momen inspiratif di lingkungan UPT BLK Wonojati."
-            className="mb-16"
-          />
+    <div className="pt-28 md:pt-32 pb-24 px-6 md:px-12 selection:bg-primary/10">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader 
+          withBreadcrumbs
+          asH1
+          badge="Dokumentasi Visual"
+          title="Galeri Kegiatan"
+          description="Melihat cuplikan proses pelatihan, fasilitas workshop, dan berbagai momen inspiratif di lingkungan UPT BLK Wonojati."
+          className="mb-16"
+        />
 
-          <GaleriGrid initialItems={items || []} categories={categories} />
-        </div>
+        <GaleriGrid initialItems={items || []} categories={categories} />
       </div>
-    </main>
+    </div>
   );
 }

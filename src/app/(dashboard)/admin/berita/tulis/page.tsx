@@ -1,11 +1,12 @@
 import BeritaForm from "../BeritaForm";
-import { auth } from "@/auth";
+import { checkRole } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function TulisBeritaPage() {
-  const session = await auth();
-  if (!session || (session.user as any).role !== "admin") {
-    redirect("/login");
+  const role = await checkRole();
+  
+  if (!role) {
+    redirect("/");
   }
 
   return <BeritaForm mode="add" />;

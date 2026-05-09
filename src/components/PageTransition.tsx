@@ -25,7 +25,7 @@ function PageTransitionContent({ children }: { children: React.ReactNode }) {
   }, [pathname, searchParams, children]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full flex-1 flex flex-col">
       <AnimatePresence mode="wait">
         {isPending && (
           <motion.div
@@ -86,7 +86,7 @@ function PageTransitionContent({ children }: { children: React.ReactNode }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="min-h-[50vh]"
+        className="flex-1 flex flex-col w-full relative"
       >
         {displayChildren}
       </motion.div>

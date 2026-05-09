@@ -1,7 +1,6 @@
 import nextDynamic from "next/dynamic";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import FilterLowongan from "./FilterLowongan";
-import { auth } from "@/auth";
 import { Metadata } from "next";
 import SectionHeader from "@/components/marketing/SectionHeader";
 
@@ -48,9 +47,10 @@ export default async function LowonganKerja({ searchParams }: { searchParams: Pr
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             withBreadcrumbs
-            badge="Filter & Explore"
-            title="Peluang Tersedia"
-            description="Navigasikan masa depan Anda dengan filter pencarian yang disesuaikan dengan kompetensi Anda."
+            asH1
+            badge="Bursa Kerja Terkini"
+            title="Peluang Karir"
+            description="Temukan lowongan pekerjaan yang sesuai dengan keahlian dan minat Anda dari mitra industri kami."
           />
 
           <div className="mb-12">

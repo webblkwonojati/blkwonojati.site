@@ -27,6 +27,8 @@ import {
 import { toast } from "sonner";
 import { Building2, Eye, Pencil, Trash2, Briefcase } from "lucide-react";
 
+import Image from 'next/image';
+
 const { Title, Text } = Typography;
 
 export default function LowonganClient({ initialJobs }: { initialJobs: any[] }) {
@@ -85,21 +87,33 @@ export default function LowonganClient({ initialJobs }: { initialJobs: any[] }) 
 
   const columns = [
     {
-      title: 'LOWONGAN',
+      title: 'POSISI & PERUSAHAAN',
       key: 'job',
       fixed: 'left' as const,
+      width: 400,
       render: (_: any, record: any) => (
-        <Flex gap="middle">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
+        <Flex gap="middle" align="center" className="py-2">
+          <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100 shadow-sm">
             {record.poster_url ? (
-              <img src={record.poster_url} className="w-full h-full object-cover" alt={record.posisi} />
+              <Image 
+                src={record.poster_url} 
+                width={48} 
+                height={48} 
+                className="w-full h-full object-cover" 
+                alt={record.posisi} 
+                sizes="48px"
+              />
             ) : (
               <Briefcase className="text-slate-300 text-xl" />
             )}
           </div>
-          <div className="flex flex-col max-w-[150px] md:max-w-sm">
-            <Text strong className="text-slate-900 leading-tight block truncate">{record.posisi}</Text>
-            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block">{record.instansi_perusahaan}</Text>
+          <div className="flex flex-col min-w-0 pr-4">
+            <Text strong className="text-slate-900 leading-snug block truncate-2-lines whitespace-normal">
+              {record.posisi}
+            </Text>
+            <Text type="secondary" className="text-[10px] md:text-[11px] truncate block opacity-70 uppercase font-black tracking-wider">
+              {record.instansi_perusahaan}
+            </Text>
           </div>
         </Flex>
       ),
