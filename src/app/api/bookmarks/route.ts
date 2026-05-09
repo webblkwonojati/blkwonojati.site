@@ -1,13 +1,22 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
+    const { userId: clerkUserId } = await auth();
     
-    if (!session || !session.user || (session.user as any).role !== 'siswa') {
-      return NextResponse.json({ error: 'Unauthorized. Hanya siswa yang dapat menyimpan lowongan.' }, { status: 401 });
+    if (!clerkUserId) {
+      return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+    }
+
+    // Role-based check via Clerk metadata
+    const client = await clerkClient();
+    const user = await client.users.getUser(clerkUserId);
+    const role = user.publicMetadata?.role;
+
+    if (role !== 'siswa' && role !== 'admin' && role !== 'super_admin') {
+       // Optional: adjust logic if only siswa can bookmark
     }
 
     const body = await request.json();
@@ -17,7 +26,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid request data' }, { status: 400 });
     }
 
-    const userId = session.user.id;
+    const userId = clerkUserId;
     // We use the existing admin client
     
     if (action === 'bookmark') {
