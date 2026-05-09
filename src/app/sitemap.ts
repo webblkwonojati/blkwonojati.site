@@ -4,17 +4,30 @@ import { supabaseAdmin } from "@/lib/supabase-admin"
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://blkwonojati.site'
 
-  // Fetch all active jobs for dynamic sitemap
-  const { data: jobs } = await supabaseAdmin
-    .from('lowongan_kerja')
-    .select('id, updated_at')
-    .eq('is_active', true)
+  // Parallel fetch for jobs and news
+  const [{ data: jobs }, { data: news }] = await Promise.all([
+    supabaseAdmin
+      .from('lowongan_kerja')
+      .select('id, updated_at')
+      .eq('is_active', true),
+    supabaseAdmin
+      .from('berita')
+      .select('id, published_at')
+      .not('published_at', 'is', null)
+  ])
 
   const jobUrls = (jobs || []).map((job) => ({
     url: `${baseUrl}/lowongan-kerja/${job.id}`,
     lastModified: new Date(job.updated_at || new Date()),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
+  }))
+
+  const newsUrls = (news || []).map((item) => ({
+    url: `${baseUrl}/berita/${item.id}`,
+    lastModified: new Date(item.published_at || new Date()),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
   }))
 
   const staticPages = [
@@ -62,5 +75,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  return [...staticPages, ...jobUrls]
+  return [...staticPages, ...jobUrls, ...newsUrls]
 }

@@ -57,9 +57,9 @@ export default function TiptapEditor({ content, onChange, placeholder = "Mulai m
     Link.configure({ openOnClick: false }),
     Image.configure(),
     Placeholder.configure({
-      placeholder,
+      placeholder: placeholder || "Mulai menulis...",
     }),
-  ], [placeholder]);
+  ], []);
 
   const editor = useEditor({
     extensions,

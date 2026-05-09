@@ -4,6 +4,23 @@ import { NextResponse } from "next/server";
 const isProtectedRoot = createRouteMatcher(["/admin(.*)", "/dashboard(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
+  const url = req.nextUrl;
+  const hostname = req.headers.get("host") || "";
+
+  // 1. Shortlink Subdomain Handling
+  if (hostname === "bit.blkwonojati.site" || hostname.startsWith("bit.localhost")) {
+    const code = url.pathname === "/" ? "" : url.pathname;
+    // Rewrite to our internal route /s/[code]
+    return NextResponse.rewrite(new URL(`/s${code}`, req.url));
+  }
+
+  // 2. Linktree Subdomain Handling
+  if (hostname === "bio.wonojati.site" || hostname === "bio.blkwonojati.site" || hostname.startsWith("bio.localhost")) {
+    // Rewrite to our internal public linktree route /bio
+    return NextResponse.rewrite(new URL(`/bio`, req.url));
+  }
+
+  // 2. Admin Protection Handling
   if (isProtectedRoot(req)) {
     const session = await auth();
     
@@ -22,6 +39,8 @@ export default clerkMiddleware(async (auth, req) => {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
+
+  return NextResponse.next();
 });
 
 export const config = {

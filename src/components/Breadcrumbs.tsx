@@ -26,6 +26,21 @@ export default function Breadcrumbs() {
 
   return (
     <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": pathSegments.map((segment, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "name": routeMap[segment] || segment.charAt(0).toUpperCase() + segment.slice(1),
+              "item": `https://blkwonojati.site/${pathSegments.slice(0, index + 1).join("/")}`
+            }))
+          })
+        }}
+      />
       <Link href="/" className="hover:text-primary transition-colors focus-visible:outline-primary">
         Beranda
       </Link>

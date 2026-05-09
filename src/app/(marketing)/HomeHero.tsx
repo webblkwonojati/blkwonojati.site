@@ -34,7 +34,7 @@ export default function HomeHero() {
               repeat: Infinity,
               ease: "linear"
             }}
-            style={{ backgroundImage: "url('/batik.png')", backgroundSize: "1500px" }}
+            style={{ backgroundImage: "url('/batik.png')", backgroundSize: "1500px", willChange: "transform" }}
             className="absolute -inset-[400px]"
           />
         </div>
@@ -75,7 +75,7 @@ export default function HomeHero() {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+                transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
               }
             }}
           >
@@ -91,7 +91,7 @@ export default function HomeHero() {
               visible: {
                 opacity: 1,
                 y: 0,
-                transition: { delay: 0.4, duration: 0.8 }
+                transition: { delay: 0.6, duration: 1.2 }
               }
             }}
             className="!m-0 text-sm md:text-xl text-slate-200 max-w-2xl leading-relaxed font-medium text-balance opacity-90"
@@ -99,7 +99,17 @@ export default function HomeHero() {
             Membangun kemandirian melalui pelatihan berbasis kompetensi yang inovatif untuk tenaga kerja masa depan.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="pt-8">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { delay: 1, duration: 1.2, ease: [0.16, 1, 0.3, 1] }
+              }
+            }} 
+            className="pt-8"
+          >
             <Flex gap={20} align="center" wrap="wrap" justify="center">
               <ButtonPremium
                 href="/kejuruan-pelatihan"

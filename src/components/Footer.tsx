@@ -46,10 +46,10 @@ const navigation = [
 ];
 
 const socialLinks = [
-  { icon: <InstagramIcon size={18} />, href: "https://instagram.com", ariaLabel: "Instagram" },
-  { icon: <FacebookIcon size={18} />, href: "https://facebook.com", ariaLabel: "Facebook" },
-  { icon: <YoutubeIcon size={18} />, href: "https://youtube.com", ariaLabel: "YouTube" },
-  { icon: <LucideMail size={18} />, href: "mailto:info@blk-wonojati.id", ariaLabel: "Email" },
+  { icon: <InstagramIcon size={18} />, href: "https://www.instagram.com/blkwonojatimalang/", ariaLabel: "Instagram" },
+  { icon: <FacebookIcon size={18} />, href: "https://www.facebook.com/wonojati.malang/", ariaLabel: "Facebook" },
+  { icon: <YoutubeIcon size={18} />, href: "https://www.youtube.com/@UPTBLKWonojati", ariaLabel: "YouTube" },
+  { icon: <LucideMail size={18} />, href: "mailto:support@blkwonojati.site", ariaLabel: "Email" },
 ];
 
 export default function Footer() {

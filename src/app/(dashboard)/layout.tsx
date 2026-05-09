@@ -1,6 +1,6 @@
-import Sidebar from "@/components/dashboard/Sidebar";
+import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import Header from "@/components/dashboard/Header";
-import { SidebarProvider } from "@/context/SidebarContext";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import PageTransition from "@/components/PageTransition";
 
 import { checkRole } from "@/lib/auth";
@@ -16,37 +16,20 @@ export default async function DashboardLayout({
   if (!role) {
     redirect("/");
   }
+  
   return (
     <SidebarProvider>
-      <div className="flex bg-slate-50 min-h-screen">
-        {/* Sidebar - Fixed Left */}
-        <SidebarForce />
+      <AppSidebar />
+      <SidebarInset className="bg-[#FAFAFA] flex flex-col min-h-screen">
+        <Header />
         
-        {/* Main Content Area - Scrolled */}
-        <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
-          <Header />
-          
-          {/* Dashboard Content Container */}
-          <div className="p-4 md:p-8 relative flex-1">
-            {/* Subtle Grid Background */}
-            <div className="absolute inset-0 -z-0 pointer-events-none opacity-[0.03]" 
-                 style={{ backgroundImage: 'radial-gradient(#5ca25a 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
-            </div>
-            
-            <div className="relative z-10 h-full">
-              <PageTransition>
-                {children}
-              </PageTransition>
-            </div>
-          </div>
-        </main>
-      </div>
+        {/* Dashboard Content Container */}
+        <div className="p-4 md:p-8 flex-1 max-w-[1400px] mx-auto w-full">
+          <PageTransition>
+            {children}
+          </PageTransition>
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   );
-}
-
-// Separate component for Sidebar to avoid breaking the server-side layout with "use client" if needed, 
-// but Sidebar already has "use client" so it's fine.
-function SidebarForce() {
-  return <Sidebar />
 }

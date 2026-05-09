@@ -6,6 +6,15 @@ import { revalidatePath } from 'next/cache';
 // We fetch by username to find profile logic, or we hardcode a single profile for this linktree
 // In this case, we'll fetch all links or pass a specific profile ID
 export async function getLinks(profileId: string) {
+  // Check if profileId is a valid UUID before querying to avoid database errors
+  // Clerk user IDs like 'user_...' are not UUIDs
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(profileId);
+  
+  if (!isUuid) {
+    console.warn('⚠️ getLinks called with non-UUID profileId:', profileId);
+    return [];
+  }
+
   const { data, error } = await supabase
     .from('links')
     .select('*')

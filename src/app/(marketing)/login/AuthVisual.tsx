@@ -27,6 +27,7 @@ export default function AuthVisual({ title, imageSrc, imageAlt, isReverse }: Aut
           src={imageSrc} 
           alt={imageAlt} 
           fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover opacity-50"
           priority
         />
@@ -43,7 +44,7 @@ export default function AuthVisual({ title, imageSrc, imageAlt, isReverse }: Aut
           transition={{ delay: 0.3, duration: 0.8 }}
         >
           <div className="w-14 h-14 bg-white rounded-xl p-2 mb-8 shadow-xl relative">
-            <Image src="/logo-blk.png" alt="Logo UPT BLK Wonojati" fill className="p-2 object-contain" />
+            <Image src="/logo-blk.png" alt="Logo UPT BLK Wonojati" fill sizes="56px" className="p-2 object-contain" />
           </div>
           <h1 className={cn(
             "text-5xl font-black text-white leading-tight mb-4",

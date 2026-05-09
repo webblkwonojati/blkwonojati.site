@@ -15,6 +15,7 @@ const display = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.blkwonojati.site"),
   title: {
     default: "UPT BLK Wonojati | Pelatihan Kerja & Kompetensi",
     template: "%s | UPT BLK Wonojati"
@@ -25,6 +26,10 @@ export const metadata: Metadata = {
   creator: "UPT BLK Wonojati",
   alternates: {
     canonical: "https://www.blkwonojati.site",
+  },
+  icons: {
+    icon: "/logo-blk.png",
+    apple: "/logo-blk.png",
   },
   openGraph: {
     type: "website",
@@ -60,11 +65,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          as="style"
-        />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"

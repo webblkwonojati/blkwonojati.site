@@ -12,7 +12,8 @@ import {
   Globe,
   User as UserIcon,
   Image as ImageIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Link as LinkIcon
 } from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ const adminNavItems = [
   { icon: Newspaper, label: "Berita & Artikel", href: "/admin/berita" },
   { icon: ImageIcon, label: "Galeri Dokumentasi", href: "/admin/galeri" },
   { icon: Link2, label: "Linktree Manager", href: "/admin/links" },
+  { icon: LinkIcon, label: "Shortlink Manager", href: "/admin/shortlink" },
   { icon: Briefcase, label: "Lowongan Kerja", href: "/admin/lowongan-kerja" },
 ];
 
@@ -135,7 +137,7 @@ export default function Sidebar() {
              <div className="overflow-hidden">
                <p className="text-sm font-bold text-slate-900 truncate">{user?.fullName || user?.username || "Admin"}</p>
                <p className="text-[10px] font-bold text-slate-400 truncate tracking-tight">
-                 {user?.primaryEmailAddress?.emailAddress || "admin@wonojati.site"}
+                 {user?.primaryEmailAddress?.emailAddress || "support@blkwonojati.site"}
                </p>
              </div>
           </div>

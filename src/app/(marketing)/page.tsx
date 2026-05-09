@@ -45,7 +45,7 @@ export default async function Home() {
     .limit(3);
 
   return (
-    <>
+    <main>
       <HomeHero />
       <HomeNews news={latestNews || []} />
       <HomeVideo />
@@ -55,6 +55,6 @@ export default async function Home() {
       <HomeCTA />
       <HomeFAQ />
       <HomeLogos />
-    </>
+    </main>
   );
 }

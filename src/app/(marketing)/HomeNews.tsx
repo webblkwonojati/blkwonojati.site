@@ -80,9 +80,13 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
               key={item.id}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               variants={fadeInUp}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ 
+                delay: idx * 0.15,
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1] 
+              }}
             >
               <Link href={`/berita/${item.id}`} className="group block h-full">
                 <article className="h-full bg-white border border-slate-100 rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">

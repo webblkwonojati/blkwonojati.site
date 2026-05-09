@@ -222,7 +222,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
         {relatedPosts.length > 0 && (
           <section className="mt-24 md:mt-40">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
-              <h4 className="text-2xl font-bold text-slate-900 tracking-tight">Berita Lainnya</h4>
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Berita Lainnya</h2>
               <Link href="/berita" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
                 Semua Berita <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
               </Link>
@@ -240,9 +240,9 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
                       </div>
                     )}
                   </div>
-                  <h5 className="text-lg font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
                     {post.title}
-                  </h5>
+                  </h3>
                 </Link>
               ))}
             </div>
