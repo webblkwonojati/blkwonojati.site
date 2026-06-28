@@ -94,8 +94,7 @@ export default function HomeInstagram() {
                 className="instagram-media"
                 data-instgrm-permalink={url}
                 data-instgrm-version="14"
-                title={`Instagram post ${idx + 1}`}
-                aria-label={`Instagram post ${idx + 1} dari BLK Wonojati`}
+                title={`Instagram post ${idx + 1} dari BLK Wonojati`}
                 style={{
                   background: "#FFF",
                   border: 0,

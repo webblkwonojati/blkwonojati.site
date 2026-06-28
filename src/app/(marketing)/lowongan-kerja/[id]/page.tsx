@@ -64,7 +64,7 @@ export default async function LowonganDetail({ params }: { params: Promise<{ id:
             "@type": "JobPosting",
             "title": job.posisi,
             "description": job.deskripsi,
-            "datePosted": job.created_at || new Date().toISOString(),
+            "datePosted": job.created_at || "2024-01-01",
             "hiringOrganization": {
               "@type": "Organization",
               "name": job.perusahaan
