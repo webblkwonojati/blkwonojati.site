@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { FileText, Upload, Loader } from "lucide-react";
 
 interface FileUploadProps {
   initialValue?: string;
@@ -56,7 +57,7 @@ export default function FileUpload({ initialValue, onUploadComplete, label }: Fi
       >
         {preview ? (
           <div className="text-center">
-            <span className="material-symbols-outlined text-4xl text-green-500 mb-2">task</span>
+            <FileText className="w-10 h-10 text-green-500 mb-2" />
             <p className="text-[12px] font-bold text-slate-700 break-all px-4">
               {preview.split('/').pop()}
             </p>
@@ -64,14 +65,14 @@ export default function FileUpload({ initialValue, onUploadComplete, label }: Fi
           </div>
         ) : (
           <div className="text-center">
-            <span className="material-symbols-outlined text-4xl text-slate-300 group-hover:text-red-500 transition-colors">upload_file</span>
-            <p className="text-[12px] font-bold text-slate-400 mt-2 uppercase tracking-widest">Pilih File PDF</p>
+            <Upload className="w-10 h-10 text-slate-300 group-hover:text-red-500 transition-colors" />
+            <p className="text-[12px] font-bold text-slate-500 mt-2 uppercase tracking-widest">Pilih File PDF</p>
           </div>
         )}
         
         {uploading && (
           <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
-            <span className="material-symbols-outlined animate-spin text-primary text-3xl mb-2">refresh</span>
+            <Loader className="w-8 h-8 animate-spin text-primary mb-2" />
             <p className="text-xs font-bold text-slate-600 animate-pulse">Mengunggah...</p>
           </div>
         )}

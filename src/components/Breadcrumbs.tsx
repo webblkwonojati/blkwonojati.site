@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
+import { ChevronRight } from "lucide-react";
 
 export default function Breadcrumbs() {
   const pathname = usePathname();
@@ -25,7 +26,7 @@ export default function Breadcrumbs() {
   };
 
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
+    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -52,7 +53,7 @@ export default function Breadcrumbs() {
 
         return (
           <Fragment key={path}>
-            <span className="material-symbols-outlined text-sm select-none" aria-hidden="true">chevron_right</span>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-500 select-none" aria-hidden="true" />
             {isLast ? (
               <span className="text-slate-900" aria-current="page">{name}</span>
             ) : (

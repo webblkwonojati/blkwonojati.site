@@ -2,6 +2,7 @@ import nextDynamic from "next/dynamic";
 import SectionHeader from "@/components/marketing/SectionHeader";
 import { Metadata } from "next";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { Newspaper } from "lucide-react";
 
 // Dynamic import to reduce initial JS payload
 const BeritaClient = nextDynamic(() => import("./BeritaClient"));
@@ -58,9 +59,7 @@ export default async function BeritaPage() {
           <BeritaClient hero={hero} rest={rest} categories={categories} />
         ) : (
           <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
-            <span className="material-symbols-outlined text-4xl text-slate-300 block mb-4">
-              newspaper
-            </span>
+            <Newspaper className="w-10 h-10 text-slate-300 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-slate-900">Belum Ada Berita</h3>
             <p className="text-sm text-slate-500 max-w-xs mx-auto mt-2">
               Kami akan segera mempublikasikan informasi terbaru di sini.

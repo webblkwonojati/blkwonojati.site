@@ -5,7 +5,18 @@ import GaleriGrid from "./GaleriGrid";
 export const dynamic = 'force-dynamic';
 export const metadata = {
   title: "Galeri Dokumentasi | AgriLearn",
-  description: "Koleksi foto kegiatan dan fasilitas di UPT BLK Wonojati."
+  description: "Koleksi foto kegiatan dan fasilitas di UPT BLK Wonojati.",
+  openGraph: {
+    title: "Galeri Dokumentasi | UPT BLK Wonojati",
+    description: "Koleksi foto kegiatan dan fasilitas di UPT BLK Wonojati.",
+    images: [{ url: "/BLK-wonojati.webp", width: 1200, height: 630, alt: "BLK Wonojati" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Galeri Dokumentasi | UPT BLK Wonojati",
+    description: "Koleksi foto kegiatan dan fasilitas di UPT BLK Wonojati.",
+    images: ["/BLK-wonojati.webp"],
+  },
 };
 
 export default async function Galeri() {

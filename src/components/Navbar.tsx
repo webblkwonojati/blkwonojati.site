@@ -9,22 +9,8 @@ import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import ButtonPremium from "@/components/ui/ButtonPremium";
-
-const InstagramIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
-);
-
-const FacebookIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-);
-
-const YoutubeIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z" /><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" /></svg>
-);
-
-const WhatsAppIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-7.6 8.38 8.38 0 0 1 3.8.9L21 7.5z" /></svg>
-);
+import { X, Menu, ArrowRight, Mail } from "lucide-react";
+import { InstagramIcon, FacebookIcon, YoutubeIcon } from "@/components/ui/Icons";
 
 const navLinks = [
   { name: "Beranda", href: "/" },
@@ -170,9 +156,7 @@ export default function Navbar() {
           aria-expanded={isMobileMenuOpen}
           className={cn("lg:hidden transition-colors", isTransparent && !isMobileMenuOpen ? "text-white" : "text-slate-900")}
         >
-          <span className="material-symbols-outlined text-2xl">
-            {isMobileMenuOpen ? "close" : "menu"}
-          </span>
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div >
 
@@ -211,7 +195,7 @@ export default function Navbar() {
                     aria-label="Tutup menu navigasi"
                     className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 active:scale-90 transition-all"
                   >
-                    <span className="material-symbols-outlined text-xl">close</span>
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
@@ -241,12 +225,10 @@ export default function Navbar() {
                             )}>
                               {link.name}
                             </span>
-                            <span className={cn(
-                              "material-symbols-outlined text-lg opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0",
+                            <ArrowRight className={cn(
+                              "w-4 h-4 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0",
                               isActive && "opacity-100 translate-x-0"
-                            )}>
-                              east
-                            </span>
+                            )} strokeWidth={2.5} />
                           </Link>
                         </motion.div>
                       );
@@ -277,7 +259,7 @@ export default function Navbar() {
 
                 {/* Drawer Footer */}
                 <div className="p-8 bg-slate-50/50 border-t border-slate-100 mt-auto">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono">Social Media</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6 font-mono">Social Media</p>
                   <div className="flex items-center gap-3">
                     <a href="https://www.instagram.com/blkwonojatimalang/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all hover:text-primary">
                       <InstagramIcon size={18} />
@@ -289,7 +271,7 @@ export default function Navbar() {
                       <YoutubeIcon size={18} />
                     </a>
                     <a href="mailto:support@blkwonojati.site" aria-label="Email Kami" className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition-all hover:text-primary">
-                      <span className="material-symbols-outlined text-lg" aria-hidden="true">mail</span>
+                      <Mail className="w-5 h-5" aria-hidden="true" />
                     </a>
                   </div>
                 </div>

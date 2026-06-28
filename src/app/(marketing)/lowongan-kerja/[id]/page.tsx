@@ -1,7 +1,7 @@
 import nextDynamic from "next/dynamic";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { notFound } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+
 import { Metadata } from "next";
 
 // Dynamic import for client component
@@ -39,16 +39,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function LowonganDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  // Parallelize auth and data fetching
-  const [session, { data: job, error }] = await Promise.all([
-    auth(),
-    supabaseAdmin
-      .from('lowongan_kerja')
-      .select('*')
-      .eq('id', id)
-      .eq('is_active', true)
-      .single()
-  ]);
+  const { data: job, error } = await supabaseAdmin
+    .from('lowongan_kerja')
+    .select('*')
+    .eq('id', id)
+    .eq('is_active', true)
+    .single();
 
   if (error || !job) {
     notFound();
@@ -87,7 +83,6 @@ export default async function LowonganDetail({ params }: { params: Promise<{ id:
         job={job} 
         descriptionLines={descriptionLines} 
         qualificationLines={qualificationLines} 
-        session={session} 
       />
     </main>
   );

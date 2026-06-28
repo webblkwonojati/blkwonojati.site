@@ -2,6 +2,8 @@ import dynamic from "next/dynamic";
 import SectionHeader from "@/components/marketing/SectionHeader";
 import Image from "next/image";
 import { Metadata } from "next";
+import { type LucideIcon } from "lucide-react";
+import { materialIconMap } from "@/lib/icon-map";
 
 // Dynamic import for below-the-fold component
 const HistorySlider = dynamic(() => import("./HistorySlider"));
@@ -9,6 +11,17 @@ const HistorySlider = dynamic(() => import("./HistorySlider"));
 export const metadata: Metadata = {
   title: "Profil Lembaga",
   description: "Kenali lebih dekat UPT BLK Wonojati, visi, misi, dan sejarah kami dalam membangun kompetensi nasional.",
+  openGraph: {
+    title: "Profil Lembaga | UPT BLK Wonojati",
+    description: "Kenali lebih dekat UPT BLK Wonojati, visi, misi, dan sejarah kami dalam membangun kompetensi nasional.",
+    images: [{ url: "/BLK-wonojati.webp", width: 1200, height: 630, alt: "BLK Wonojati" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Profil Lembaga | UPT BLK Wonojati",
+    description: "Kenali lebih dekat UPT BLK Wonojati, visi, misi, dan sejarah kami dalam membangun kompetensi nasional.",
+    images: ["/BLK-wonojati.webp"],
+  },
 };
 
 // Hoisted static data
@@ -26,7 +39,7 @@ const FACILITIES = [
 
 export default function ProfilPage() {
   return (
-    <main className="relative flex h-auto min-h-screen w-full flex-col bg-transparent">
+    <main className="relative flex h-auto w-full flex-col bg-transparent">
       <div className="flex-1">
         {/* --- Intro Content Section --- */}
         <section className="pt-28 md:pt-32 pb-16 px-6 border-b border-slate-100">
@@ -39,7 +52,7 @@ export default function ProfilPage() {
                   title="Pendahuluan"
                   description="Mengenal landasan institusi kami sebagai pusat pengembangan kompetensi."
                 />
-                <div className="space-y-6 text-slate-500 leading-relaxed font-medium text-sm md:text-base">
+                <div className="space-y-6 text-slate-700 leading-relaxed font-medium text-sm md:text-base">
                   <p>
                     Jawa Timur merupakan sentra pertanian di Indonesia. Peningkatan SDM melalui pelatihan kerja berbasis kompetensi sangat penting untuk menghadapi arus perubahan teknologi.
                   </p>
@@ -120,7 +133,7 @@ export default function ProfilPage() {
                   title="Satu Dekade Berbakti"
                   description="Perjalanan kami mencetak tenaga kerja handal."
                 />
-                <div className="space-y-6 text-slate-500 font-medium text-sm md:text-base">
+                <div className="space-y-6 text-slate-700 font-medium text-sm md:text-base">
                   <p>Berawal dari semangat memajukan sektor agrikultur lokal, UPT BLK Wonojati kini menjadi institusi vokasi rujukan di Jawa Timur.</p>
                   <p>Kami percaya setiap individu memiliki potensi besar jika diberikan akses pada pengetahuan yang tepat.</p>
                 </div>
@@ -144,7 +157,10 @@ export default function ProfilPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {FACILITIES.map((f, i) => (
                 <div key={i} className="p-5 rounded-xl border border-slate-100 bg-slate-50 flex flex-col items-center text-center hover:bg-white hover:border-primary/20 transition-all shadow-sm">
-                  <span className="material-symbols-outlined text-2xl text-slate-400 mb-3">{f.icon}</span>
+                  {(() => {
+                    const Icon = materialIconMap[f.icon] as LucideIcon | undefined;
+                    return Icon ? <Icon className="w-6 h-6 text-slate-500 mb-3" /> : <span className="w-6 h-6 mb-3" />;
+                  })()}
                   <h3 className="text-xs font-bold text-slate-900">{f.title}</h3>
                 </div>
               ))}

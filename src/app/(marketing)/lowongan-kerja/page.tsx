@@ -9,6 +9,17 @@ const AnimatedLowongan = nextDynamic(() => import("./AnimatedLowongan"));
 export const metadata: Metadata = {
   title: "Lowongan Kerja",
   description: "Temukan berbagai peluang karir dari mitra industri UPT BLK Wonojati khusus untuk alumni dan peserta pelatihan.",
+  openGraph: {
+    title: "Lowongan Kerja | UPT BLK Wonojati",
+    description: "Temukan berbagai peluang karir dari mitra industri UPT BLK Wonojati khusus untuk alumni dan peserta pelatihan.",
+    images: [{ url: "/BLK-wonojati.webp", width: 1200, height: 630, alt: "BLK Wonojati" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lowongan Kerja | UPT BLK Wonojati",
+    description: "Temukan berbagai peluang karir dari mitra industri UPT BLK Wonojati khusus untuk alumni dan peserta pelatihan.",
+    images: ["/BLK-wonojati.webp"],
+  },
 };
 
 export const dynamic = 'force-dynamic';

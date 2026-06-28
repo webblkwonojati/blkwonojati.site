@@ -8,18 +8,34 @@ import ButtonPremium from "@/components/ui/ButtonPremium";
 
 export default function HomeInstagram() {
   useEffect(() => {
-    // Only load script if not already present
+    const titles = [
+      "Instagram post 1 dari BLK Wonojati",
+      "Instagram post 2 dari BLK Wonojati",
+      "Instagram post 3 dari BLK Wonojati",
+    ];
+
+    const setTitles = () => {
+      for (let i = 0; i < 3; i++) {
+        const el = document.getElementById(`instagram-embed-${i}`) as HTMLIFrameElement | null;
+        if (el && !el.title) el.title = titles[i];
+      }
+    };
+
     if (!document.getElementById("instagram-embed-script")) {
       const script = document.createElement("script");
       script.id = "instagram-embed-script";
       script.src = "https://www.instagram.com/embed.js";
       script.async = true;
       document.body.appendChild(script);
-    } else {
-      if ((window as any).instgrm) {
-        (window as any).instgrm.Embeds.process();
-      }
+    } else if ((window as any).instgrm) {
+      (window as any).instgrm.Embeds.process();
     }
+
+    const interval = setInterval(setTitles, 500);
+    const timeout = setTimeout(() => clearInterval(interval), 15000);
+    setTitles();
+
+    return () => { clearInterval(interval); clearTimeout(timeout); };
   }, []);
 
   const embeds = [
@@ -29,11 +45,10 @@ export default function HomeInstagram() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-slate-50/50 overflow-hidden relative">
+    <section className="py-24 px-6 bg-white overflow-hidden relative">
       <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeader
           align="center"
-          badge="Social Feed"
           title="Lensa BLK Wonojati"
           description="Ikuti keseruan kegiatan pelatihan dan momen inspiratif alumni kami langsung di Instagram."
         />
@@ -55,6 +70,8 @@ export default function HomeInstagram() {
                 className="instagram-media"
                 data-instgrm-permalink={url}
                 data-instgrm-version="14"
+                title={`Instagram post ${idx + 1}`}
+                aria-label={`Instagram post ${idx + 1} dari BLK Wonojati`}
                 style={{
                   background: "#FFF",
                   border: 0,
@@ -64,7 +81,9 @@ export default function HomeInstagram() {
                   maxWidth: "540px",
                   minWidth: "280px",
                   padding: 0,
-                  width: "99.375%"
+                  width: "99.375%",
+                  minHeight: "580px",
+                  position: "relative"
                 }}
               />
             </motion.div>

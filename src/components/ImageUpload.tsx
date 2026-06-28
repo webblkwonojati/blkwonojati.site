@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { ImagePlus, Loader } from "lucide-react";
 
 interface ImageUploadProps {
   initialValue?: string;
@@ -62,14 +63,14 @@ export default function ImageUpload({ initialValue, onUploadComplete, label }: I
           </>
         ) : (
           <div className="text-center p-6 bg-white/50">
-            <span className="material-symbols-outlined text-4xl text-slate-300 group-hover:text-primary transition-colors">add_photo_alternate</span>
-            <p className="text-[12px] font-bold text-slate-400 mt-2 uppercase tracking-widest">Klik untuk Upload Poster</p>
+            <ImagePlus className="w-10 h-10 text-slate-300 group-hover:text-primary transition-colors" />
+            <p className="text-[12px] font-bold text-slate-500 mt-2 uppercase tracking-widest">Klik untuk Upload Poster</p>
           </div>
         )}
         
         {uploading && (
           <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-20">
-            <span className="material-symbols-outlined animate-spin text-primary text-3xl">refresh</span>
+            <Loader className="w-8 h-8 animate-spin text-primary" />
           </div>
         )}
       </div>
@@ -80,7 +81,7 @@ export default function ImageUpload({ initialValue, onUploadComplete, label }: I
         accept="image/*" 
         className="hidden" 
       />
-      <p className="text-[10px] text-slate-400 font-medium italic">* Disarankan aspek rasio 16:9 atau 1:1 (Max 2MB)</p>
+      <p className="text-[10px] text-slate-500 font-medium italic">* Disarankan aspek rasio 16:9 atau 1:1 (Max 2MB)</p>
     </div>
   );
 }

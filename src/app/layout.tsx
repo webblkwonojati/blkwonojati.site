@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   creator: "UPT BLK Wonojati",
   alternates: {
     canonical: "https://www.blkwonojati.site",
+    languages: {
+      "id-ID": "https://www.blkwonojati.site",
+    },
   },
   icons: {
     icon: "/logo-blk.png",
@@ -63,12 +66,12 @@ export default function RootLayout({
   return (
     <html lang="id" className={cn("scroll-smooth", sans.variable, display.variable)} data-scroll-behavior="smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+          `
+        }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -96,9 +99,6 @@ export default function RootLayout({
         />
       </head>
       <body className="font-display antialiased bg-white text-slate-900 flex min-h-screen flex-col overflow-x-hidden">
-        {/* Analytics Placeholder - Uncomment and add ID when ready */}
-        {/* <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
-        
         <Providers>
           {children}
         </Providers>

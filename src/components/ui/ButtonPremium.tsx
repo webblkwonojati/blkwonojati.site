@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 interface ButtonPremiumProps {
   href?: string;
@@ -48,13 +49,8 @@ export default function ButtonPremium({
   const content = (
     <>
       <span className="relative z-10">{children}</span>
-      {icon && (
-        <span className={cn(
-          "material-symbols-outlined relative z-10 transition-transform",
-          icon === "east" ? "text-sm group-hover:translate-x-1" : "text-base opacity-60"
-        )}>
-          {icon}
-        </span>
+      {icon === "east" && (
+        <ArrowRight className="relative z-10 w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
       )}
     </>
   );

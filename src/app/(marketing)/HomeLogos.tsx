@@ -13,7 +13,7 @@ const partnerLogos = [
 
 export default function HomeLogos() {
   return (
-    <section className="py-20 bg-white border-t border-slate-50">
+    <section className="py-20 bg-green-50/50 border-t border-green-100/50">
       <div className="container mx-auto px-6">
         <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20">
           {partnerLogos.map((logo, index) => (

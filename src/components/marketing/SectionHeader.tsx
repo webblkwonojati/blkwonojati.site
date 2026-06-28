@@ -59,7 +59,7 @@ export default function SectionHeader({
         </h2>
       )}
       {description && (
-        <p className="text-slate-500 text-lg leading-relaxed font-medium">
+        <p className="text-slate-700 text-lg leading-relaxed font-medium">
           {description}
         </p>
       )}

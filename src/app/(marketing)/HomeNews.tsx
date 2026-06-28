@@ -25,10 +25,14 @@ function formatDate(dateStr: string) {
 }
 
 export default function HomeNews({ news }: { news: BeritaItem[] }) {
-  if (!news || news.length === 0) return null;
+  if (!news || news.length === 0) {
+    return (
+      <section className="py-24 px-6 relative bg-transparent overflow-hidden" aria-hidden="true" />
+    );
+  }
 
   return (
-    <section className="py-24 px-6 relative bg-transparent overflow-hidden">
+    <section className="py-24 px-6 relative bg-white overflow-hidden">
       {/* Subtle Batik Pattern - Ultra Soft Opacity */}
       <div className="absolute inset-0 opacity-[0.025] pointer-events-none overflow-hidden">
         <motion.div
@@ -42,7 +46,7 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
             ease: "linear"
           }}
           style={{ 
-            backgroundImage: "url('/batik.png')", 
+            backgroundImage: "url('/batik.webp')", 
             backgroundSize: "1200px",
             filter: "invert(1) brightness(0.5)" 
           }}
@@ -51,9 +55,7 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
       </div>
 
       {/* Decorative Background Asset */}
-      <div className="absolute bottom-[-10%] left-[-5%] w-[60vw] h-[60vw] opacity-10 pointer-events-none z-0">
-        <img src="/gradien-1.png" alt="" className="w-full h-full object-contain rotate-45" />
-      </div>
+      <div className="absolute bottom-[-10%] left-[-5%] w-[60vw] h-[60vw] opacity-10 pointer-events-none z-0" style={{ background: "radial-gradient(ellipse at center, rgba(92,162,90,0.25) 0%, transparent 60%)" }} />
 
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div
@@ -97,7 +99,7 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
                         src={item.image_url}
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover"
                         alt={item.title}
                       />
                     ) : (
@@ -117,7 +119,7 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
                   <div className="p-6 md:p-8">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="h-px w-6 bg-primary/30" />
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                         {formatDate(item.published_at || "")}
                       </span>
                     </div>
@@ -131,7 +133,7 @@ export default function HomeNews({ news }: { news: BeritaItem[] }) {
                     </p>
 
                     <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-primary transition-colors">
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-primary transition-colors">
                         Baca Artikel
                       </span>
                       <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white group-hover:border-transparent transition-all duration-300 shadow-sm">

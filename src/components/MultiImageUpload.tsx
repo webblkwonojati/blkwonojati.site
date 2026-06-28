@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { Trash2, Loader, ImagePlus } from "lucide-react";
 
 interface MultiImageUploadProps {
   initialValue?: string; // string di-join dengan koma
@@ -70,7 +71,7 @@ export default function MultiImageUpload({ initialValue, onUploadComplete, label
                 onClick={() => removeImage(idx)}
                 className="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center hover:scale-110 transition-transform"
               >
-                <span className="material-symbols-outlined text-sm">delete</span>
+                <Trash2 className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -82,11 +83,11 @@ export default function MultiImageUpload({ initialValue, onUploadComplete, label
           className="relative aspect-video rounded-xl border-2 border-dashed border-slate-200 hover:border-primary/50 transition-all cursor-pointer overflow-hidden flex flex-col items-center justify-center bg-slate-50 group hover:shadow-sm"
         >
           {uploading ? (
-            <span className="material-symbols-outlined animate-spin text-primary text-3xl">refresh</span>
+            <Loader className="w-8 h-8 animate-spin text-primary" />
           ) : (
             <>
-              <span className="material-symbols-outlined text-2xl text-slate-300 group-hover:text-primary transition-colors">add_photo_alternate</span>
-              <p className="text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-widest text-center px-2">Tambah Gambar</p>
+              <ImagePlus className="w-6 h-6 text-slate-300 group-hover:text-primary transition-colors" />
+              <p className="text-[10px] font-bold text-slate-500 mt-2 uppercase tracking-widest text-center px-2">Tambah Gambar</p>
             </>
           )}
         </div>
@@ -100,7 +101,7 @@ export default function MultiImageUpload({ initialValue, onUploadComplete, label
         accept="image/*" 
         className="hidden" 
       />
-      <p className="text-[10px] text-slate-400 font-medium italic">* Bisa mengunggah banyak gambar sekaligus. Gambar-gambar ini akan menjadi Slider (Carousel).</p>
+      <p className="text-[10px] text-slate-500 font-medium italic">* Bisa mengunggah banyak gambar sekaligus. Gambar-gambar ini akan menjadi Slider (Carousel).</p>
     </div>
   );
 }

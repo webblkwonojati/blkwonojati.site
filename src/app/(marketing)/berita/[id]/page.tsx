@@ -133,11 +133,27 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
         }
       `}} />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": item.title,
+            "description": item.excerpt || "",
+            "image": item.image_url || "https://blkwonojati.site/BLK-wonojati.webp",
+            "author": { "@type": "Organization", "name": "UPT BLK Wonojati" },
+            "publisher": { "@type": "Organization", "name": "UPT BLK Wonojati" },
+            "datePublished": item.published_at || item.created_at,
+            "dateModified": item.updated_at || item.published_at || item.created_at,
+          })
+        }}
+      />
       <ReadingProgressBar />
 
       <div className="container max-w-5xl mx-auto px-6 font-sans">
         {/* Header Breadcrumb */}
-        <Link href="/berita" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-primary transition-all mb-8 md:mb-12">
+        <Link href="/berita" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 hover:text-primary transition-all mb-8 md:mb-12">
           <ChevronLeft className="w-4 h-4" />
           Katalog Berita
         </Link>
@@ -147,11 +163,11 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
           <span className="px-4 py-1.5 bg-primary text-white text-[9px] font-bold uppercase tracking-widest rounded-lg shadow-lg shadow-primary/20 whitespace-nowrap">
             {item.category || "Berita"}
           </span>
-          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+          <div className="flex items-center gap-2 text-slate-500 text-xs font-bold uppercase tracking-widest whitespace-nowrap">
             <Calendar className="w-3.5 h-3.5" />
             {formatDate(item.published_at || item.created_at)}
           </div>
-          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest md:pl-4 md:border-l border-slate-100 whitespace-nowrap">
+          <div className="flex items-center gap-2 text-slate-500 text-xs font-bold uppercase tracking-widest md:pl-4 md:border-l border-slate-100 whitespace-nowrap">
             <Clock className="w-3.5 h-3.5" />
             {readingTime} Menit Baca
           </div>
@@ -169,7 +185,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
               <User className="w-5 h-5" />
             </div>
             <div className="whitespace-nowrap">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Penulis</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Penulis</p>
               <p className="text-sm font-bold text-slate-900">Admin BLK Wonojati</p>
             </div>
           </div>
@@ -233,7 +249,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
                 <Link key={post.id} href={`/berita/${post.id}`} className="group block">
                   <div className="relative aspect-video rounded-3xl overflow-hidden mb-6 bg-slate-50 border border-slate-100">
                     {post.image_url ? (
-                      <Image src={post.image_url} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-110" alt={post.title} />
+                      <Image src={post.image_url} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" alt={post.title} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-slate-200">
                         <Newspaper className="w-8 h-8" />
@@ -255,7 +271,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,#5ca25a20,transparent_50%)]" />
         <div className="container max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Eksplorasi Keahlian Anda</h2>
-          <p className="text-slate-400 text-lg mb-12 max-w-xl mx-auto font-medium">Temukan pelatihan yang tepat untuk jenjang karir Anda di UPT BLK Wonojati.</p>
+          <p className="text-slate-500 text-lg mb-12 max-w-xl mx-auto font-medium">Temukan pelatihan yang tepat untuk jenjang karir Anda di UPT BLK Wonojati.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <ButtonPremium href="/kejuruan-pelatihan" size="lg">Lihat Kejuruan</ButtonPremium>
             <ButtonPremium href="/bantuan" variant="outline" size="lg">Hubungi Admin</ButtonPremium>

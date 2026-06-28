@@ -4,25 +4,13 @@ import Link from "next/link";
 import { MapPin, Mail as LucideMail } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { InstagramIcon, FacebookIcon, YoutubeIcon } from "@/components/ui/Icons";
 
-// Dynamic import for Leaflet (Client-side only)
-const LeafletMap = dynamic(() => import("./marketing/LeafletMap"), {
+// Dynamic import for MapLibre (Client-side only)
+const MapLibreMap = dynamic(() => import("./marketing/MapLibreMap"), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-slate-800 animate-pulse flex items-center justify-center text-slate-600 font-bold uppercase text-[10px] tracking-widest">Loading Map...</div>
+  loading: () => <div className="w-full bg-slate-100 animate-pulse flex items-center justify-center text-slate-400 font-bold uppercase text-[10px] tracking-widest" style={{ height: '256px', flexShrink: 0 }}>Loading Map...</div>
 });
-
-// Social SVG Icons
-const InstagramIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
-);
-
-const FacebookIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-);
-
-const YoutubeIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z" /><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" /></svg>
-);
 
 const navigation = [
   {
@@ -56,10 +44,16 @@ export default function Footer() {
   return (
     <footer className="relative w-full overflow-hidden group bg-[#1a3a1a] mt-auto">
       {/* Background Image Container */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-20"
-        style={{ backgroundImage: "url('/footer.jpg')" }}
-      />
+      <div className="absolute inset-0 z-0 transition-transform duration-1000 group-hover:scale-105 opacity-20">
+        <Image
+          src="/footer.jpg"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
 
       {/* Dark Overlay with Gradient */}
       <div className="absolute inset-0 z-1 bg-gradient-to-b from-[#1a3a1a] via-[#1a3a1a]/95 to-[#1a3a1a]" />
@@ -110,9 +104,9 @@ export default function Footer() {
           {/* Links Columns */}
           {navigation.map((group) => (
             <div key={group.title} className="lg:col-span-2 text-center lg:text-left pt-2">
-              <h4 className="text-white font-bold mb-6 text-[10px] uppercase tracking-[0.2em] opacity-70">
+              <h3 className="text-white font-bold mb-6 text-[10px] uppercase tracking-[0.2em] opacity-70">
                 {group.title}
-              </h4>
+              </h3>
               <ul className="flex flex-col gap-4">
                 {group.links.map((link) => (
                   <li key={link.name}>
@@ -130,11 +124,11 @@ export default function Footer() {
 
           {/* Map Column */}
           <div className="lg:col-span-4 flex flex-col gap-5">
-            <h4 className="text-white font-bold text-[10px] uppercase tracking-[0.2em] self-center lg:self-start opacity-70 pt-2">
+            <h3 className="text-white font-bold text-[10px] uppercase tracking-[0.2em] self-center lg:self-start opacity-70 pt-2">
               Lokasi Strategis
-            </h4>
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40 bg-slate-800">
-              <LeafletMap />
+            </h3>
+            <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40 bg-slate-800" style={{ height: '256px', flexShrink: 0 }}>
+              <MapLibreMap />
             </div>
             <div className="flex align-start gap-4 text-slate-300">
               <MapPin size={16} className="shrink-0 text-primary mt-1" />

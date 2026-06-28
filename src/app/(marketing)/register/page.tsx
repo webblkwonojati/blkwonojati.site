@@ -2,6 +2,7 @@ import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import AuthVisual from "../login/AuthVisual";
 import { Metadata } from "next";
+import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Registrasi Akun",
@@ -24,9 +25,9 @@ export default function RegisterPage() {
         <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-20">
           <Link 
             href="/" 
-            className="flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-accent uppercase tracking-[0.2em] transition-all"
+            className="flex items-center gap-2 text-[10px] font-black text-slate-500 hover:text-accent uppercase tracking-[0.2em] transition-all"
           >
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
+            <ArrowLeft className="w-4 h-4" />
             Beranda
           </Link>
         </div>

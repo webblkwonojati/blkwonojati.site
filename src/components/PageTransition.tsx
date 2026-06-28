@@ -1,95 +1,81 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
-import Image from "next/image";
+import { Suspense, useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-function PageTransitionContent({ children }: { children: React.ReactNode }) {
+function LoadingBarInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isPending, setIsPending] = useState(false);
-  const [displayChildren, setDisplayChildren] = useState(children);
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    // When pathname or searchParams change, we start the loading state
-    setIsPending(true);
-    
-    // Faster delay for a snappier feel while still allowing content to load
-    const timer = setTimeout(() => {
-      setDisplayChildren(children);
-      setIsPending(false);
-    }, 400);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
-    return () => clearTimeout(timer);
-  }, [pathname, searchParams, children]);
+  useEffect(() => {
+    setVisible(true);
+    setProgress(0);
+
+    const t1 = setTimeout(() => setProgress(30), 50);
+    const t2 = setTimeout(() => setProgress(60), 200);
+    const t3 = setTimeout(() => setProgress(85), 500);
+
+    timerRef.current = setTimeout(() => {
+      setProgress(100);
+      setTimeout(() => {
+        setVisible(false);
+        setProgress(0);
+      }, 300);
+    }, 700);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [pathname, searchParams]);
 
   return (
-    <div className="relative w-full flex-1 flex flex-col">
-      <AnimatePresence mode="wait">
-        {isPending && (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed top-0 left-0 right-0 z-[9999] h-[3px]"
+        >
           <motion.div
-            key="page-loader"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1a3a1a]"
-          >
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-[size:40px_40px]" />
-            
-            <div className="relative flex flex-col items-center">
-              {/* Logo Pulsing */}
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.8, 1, 0.8]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="w-24 h-24 mb-8"
-              >
-                <Image
-                  src="/logo-blk.png"
-                  alt="Loading..."
-                  width={96}
-                  height={96}
-                  className="object-contain brightness-0 invert"
-                />
-              </motion.div>
+            className="h-full bg-gradient-to-r from-primary via-secondary to-primary"
+            initial={{ width: "0%" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
-              {/* Progress Line */}
-              <div className="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
-                <motion.div 
-                  initial={{ left: "-100%" }}
-                  animate={{ left: "100%" }}
-                  transition={{ 
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-green-400 to-transparent shadow-[0_0_15px_rgba(74,222,128,0.5)]"
-                />
-              </div>
-              <p className="mt-6 text-white/40 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">Menyiapkan Konten</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+function LoadingBar() {
+  return (
+    <Suspense fallback={null}>
+      <LoadingBarInner />
+    </Suspense>
+  );
+}
 
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className="flex-1 flex flex-col w-full relative"
-      >
-        {displayChildren}
-      </motion.div>
+function PageTransitionContent({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative w-full flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col w-full relative">
+        {children}
+      </div>
     </div>
   );
 }
@@ -97,6 +83,7 @@ function PageTransitionContent({ children }: { children: React.ReactNode }) {
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   return (
     <Suspense fallback={null}>
+      <LoadingBar />
       <PageTransitionContent>{children}</PageTransitionContent>
     </Suspense>
   );

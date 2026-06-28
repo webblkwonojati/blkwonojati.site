@@ -58,6 +58,10 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
+          {
+            key: "Permissions-Policy",
+            value: "attribution-reporting=(), interest-cohort=(), otp-credentials=(), private-state-token-issuance=(), shared-storage=(), shared-storage-select-url=(), private-state-token-redemption=()",
+          },
         ],
       },
     ];

@@ -88,13 +88,14 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
       {/* ─── Search + Filter Bar ─────────────────────────────────────────── */}
       <div className="mb-10 space-y-4">
         <div className="relative max-w-lg">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-700 pointer-events-none" />
           <input
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari berita atau artikel..."
-            className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-200 bg-white text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-sm"
+            aria-label="Cari berita atau artikel"
+            className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-200 bg-white text-sm font-medium text-slate-700 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-sm"
           />
         </div>
         {/* Category Filter Pills - Scrollable on Mobile */}
@@ -105,7 +106,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
               onClick={() => setActiveCategory(cat)}
               className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shrink-0 ${activeCategory === cat
                   ? "bg-primary text-white shadow-md shadow-primary/25"
-                  : "bg-white text-slate-500 border border-slate-200 hover:border-primary/40 hover:text-primary"
+                   : "bg-white text-slate-700 border border-slate-200 hover:border-primary/40 hover:text-primary"
                 }`}
             >
               {cat}
@@ -130,7 +131,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover"
                   alt={heroArticle.title}
                 />
               ) : (
@@ -185,7 +186,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                         src={item.image_url}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover"
                         alt={item.title}
                       />
                     ) : (
@@ -200,17 +201,17 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
                       <span className="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/5 px-2.5 py-1 rounded-md">
                         {item.category || "Berita"}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-medium">
+                      <span className="text-[10px] text-slate-700 font-medium">
                         {formatDate(item.published_at || item.created_at)}
                       </span>
                     </div>
                     <h3 className="font-bold text-slate-900 mb-2 leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-slate-500 leading-relaxed line-clamp-2">
+                    <p className="text-sm text-slate-700 leading-relaxed line-clamp-2">
                       {item.excerpt || "Baca selengkapnya..."}
                     </p>
-                    <div className="mt-4 text-xs font-bold flex items-center gap-1.5 text-slate-400 group-hover:text-primary transition-colors">
+                    <div className="mt-4 text-xs font-bold flex items-center gap-1.5 text-slate-700 group-hover:text-primary transition-colors">
                       Baca <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
@@ -223,7 +224,7 @@ export default function BeritaClient({ hero, rest, categories }: BeritaClientPro
         <div className="text-center py-24 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
           <Newspaper className="w-10 h-10 text-slate-300 mx-auto mb-4" />
           <h3 className="text-lg font-bold text-slate-900">Tidak Ada Hasil</h3>
-          <p className="text-sm text-slate-500 max-w-xs mx-auto mt-2">
+          <p className="text-sm text-slate-700 max-w-xs mx-auto mt-2">
             {searchQuery
               ? `Tidak ditemukan artikel untuk "${searchQuery}".`
               : "Belum ada artikel di kategori ini."}

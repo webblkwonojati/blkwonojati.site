@@ -43,7 +43,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
             className={`whitespace-nowrap px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all shrink-0 ${
               activeCategory === cat 
                 ? "bg-slate-900 text-white shadow-xl shadow-slate-900/10 scale-105" 
-                : "bg-slate-50 text-slate-400 hover:bg-slate-100"
+                : "bg-slate-50 text-slate-500 hover:bg-slate-100"
             }`}
           >
             {cat}
@@ -66,6 +66,9 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
               onClick={() => setSelectedImage(index)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedImage(index); } }}
               className="group relative aspect-square rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-slate-50 border border-slate-100 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all"
             >
               <Image
@@ -74,7 +77,7 @@ export default function GaleriGrid({ initialItems, categories }: { initialItems:
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 priority={index < 4}
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover"
               />
               
               {/* Overlay */}

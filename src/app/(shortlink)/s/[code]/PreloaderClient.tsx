@@ -38,7 +38,7 @@ export default function PreloaderClient({ targetUrl }: { targetUrl: string }) {
         <motion.div
           animate={{ x: [0, -50], y: [0, -50] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          style={{ backgroundImage: "url('/batik.png')", backgroundSize: "800px" }}
+          style={{ backgroundImage: "url('/batik.webp')", backgroundSize: "800px" }}
           className="absolute -inset-[200px]"
         />
       </div>

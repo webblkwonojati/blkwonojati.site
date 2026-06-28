@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Bell } from "lucide-react";
+import { Bell } from "lucide-react";
 
 export default async function Header() {
   const user = await currentUser();
