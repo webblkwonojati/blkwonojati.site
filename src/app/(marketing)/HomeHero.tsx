@@ -1,8 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
 import ButtonPremium from "@/components/ui/ButtonPremium";
 
 export default function HomeHero() {
@@ -19,18 +15,9 @@ export default function HomeHero() {
         />
 
         <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay overflow-hidden">
-          <motion.div
-            animate={{
-              x: [0, -100],
-              y: [0, -100]
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
+          <div
+            className="absolute -inset-[400px] animate-batik-drift"
             style={{ backgroundImage: "url('/batik.webp')", backgroundSize: "1500px", willChange: "transform" }}
-            className="absolute -inset-[400px]"
           />
         </div>
 
@@ -40,61 +27,23 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_50%_40%,rgba(92,162,90,0.4),transparent_60%)]"></div>
       </div>
 
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-        className="mx-auto max-w-4xl w-full relative z-10 flex flex-col items-center text-center gap-6"
-      >
-        <motion.p
-          variants={fadeInUp}
-          className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-white/60 -mb-2"
-        >
+      <div className="mx-auto max-w-4xl w-full relative z-10 flex flex-col items-center text-center gap-6">
+        <p className="hero-fade-up text-xs md:text-sm font-black uppercase tracking-[0.3em] text-white/60 -mb-2" style={{ animationDelay: "0ms" }}>
           UNIT PELATIHAN
-        </motion.p>
+        </p>
 
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 40, scale: 0.95 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
-            }
-          }}
-        >
+        <div className="hero-fade-scale" style={{ animationDelay: "100ms" }}>
           <h1 className="text-4xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white text-balance font-display">
             Balai Latihan Kerja <br className="hidden md:block" />
             <span className="text-white">Wonojati Malang</span>
           </h1>
-        </motion.div>
+        </div>
 
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { delay: 0.6, duration: 1.2 }
-            }
-          }}
-          className="text-sm md:text-xl text-slate-200 max-w-2xl leading-relaxed font-medium text-balance opacity-90"
-        >
+        <p className="hero-fade-up text-sm md:text-xl text-slate-200 max-w-2xl leading-relaxed font-medium text-balance opacity-90" style={{ animationDelay: "600ms" }}>
           Membangun kemandirian melalui pelatihan berbasis kompetensi yang inovatif untuk tenaga kerja masa depan.
-        </motion.p>
+        </p>
 
-        <motion.div 
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { delay: 1, duration: 1.2, ease: [0.16, 1, 0.3, 1] }
-            }
-          }} 
-          className="pt-8 flex items-center justify-center gap-5 flex-wrap"
-        >
+        <div className="hero-fade-up pt-8 flex items-center justify-center gap-5 flex-wrap" style={{ animationDelay: "1000ms" }}>
           <ButtonPremium
             href="/kejuruan-pelatihan"
             icon="east"
@@ -112,8 +61,8 @@ export default function HomeHero() {
           >
             Tentang Kami
           </ButtonPremium>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

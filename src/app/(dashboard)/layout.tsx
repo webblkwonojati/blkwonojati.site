@@ -1,3 +1,4 @@
+import "./admin.css";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import Header from "@/components/dashboard/Header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";

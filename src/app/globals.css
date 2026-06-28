@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-@plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/container-queries";
-
-
 
 @theme {
   --color-primary: #5ca25a;
@@ -156,6 +152,32 @@
 
 .animate-gradient-drift {
   animation: gradient-drift 45s ease-in-out infinite;
+}
+
+/* Hero Entrance Animations */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeScale {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes batikDrift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-100px, -100px); }
+}
+
+.hero-fade-up {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.hero-fade-scale {
+  animation: heroFadeScale 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.animate-batik-drift {
+  animation: batikDrift 20s linear infinite;
 }
 
 /* Subtle Decor */
