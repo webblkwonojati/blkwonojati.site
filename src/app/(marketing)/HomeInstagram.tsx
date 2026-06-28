@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import SectionHeader from "@/components/marketing/SectionHeader";
 import ButtonPremium from "@/components/ui/ButtonPremium";
 
 export default function HomeInstagram() {
+  const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     const titles = [
       "Instagram post 1 dari BLK Wonojati",
@@ -21,21 +23,43 @@ export default function HomeInstagram() {
       }
     };
 
-    if (!document.getElementById("instagram-embed-script")) {
-      const script = document.createElement("script");
-      script.id = "instagram-embed-script";
-      script.src = "https://www.instagram.com/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    } else if ((window as any).instgrm) {
-      (window as any).instgrm.Embeds.process();
+    const loadInstagramEmbed = () => {
+      if (!document.getElementById("instagram-embed-script")) {
+        const script = document.createElement("script");
+        script.id = "instagram-embed-script";
+        script.src = "https://www.instagram.com/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+      } else if ((window as any).instgrm) {
+        (window as any).instgrm.Embeds.process();
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadInstagramEmbed();
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     const interval = setInterval(setTitles, 500);
     const timeout = setTimeout(() => clearInterval(interval), 15000);
     setTitles();
 
-    return () => { clearInterval(interval); clearTimeout(timeout); };
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
   }, []);
 
   const embeds = [
@@ -45,7 +69,7 @@ export default function HomeInstagram() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-white overflow-hidden relative">
+    <section ref={sectionRef} className="py-24 px-6 bg-white overflow-hidden relative">
       <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeader
           align="center"

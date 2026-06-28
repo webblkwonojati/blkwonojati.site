@@ -66,6 +66,8 @@ export default function RootLayout({
   return (
     <html lang="id" className={cn("scroll-smooth", sans.variable, display.variable)} data-scroll-behavior="smooth">
       <head>
+        <link rel="preconnect" href="https://tiles.openfreemap.org" />
+        <link rel="preconnect" href="https://mint-sloth-90.clerk.accounts.dev" />
         <script dangerouslySetInnerHTML={{
           __html: `
             history.scrollRestoration = 'manual';

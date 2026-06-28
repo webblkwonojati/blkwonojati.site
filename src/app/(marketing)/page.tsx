@@ -33,7 +33,7 @@ const programs = [
   { title: "Pengoperasian Traktor", icon: "agriculture", category: "Pertanian" },
 ];
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home() {
   // Fetch latest 3 news for the spoiler

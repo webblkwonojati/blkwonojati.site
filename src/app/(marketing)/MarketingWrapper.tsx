@@ -25,11 +25,11 @@ export default function MarketingWrapper({ children }: { children: React.ReactNo
       {!isAuthPage && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div 
-            className="absolute top-[-10%] right-[-10%] w-[80vw] h-[80vw] animate-gradient-pulse"
+            className="absolute top-[-10%] right-[-10%] w-[80vw] h-[80vw] opacity-30 animate-gradient-pulse will-change-[transform,opacity]"
             style={{ background: "radial-gradient(ellipse at center, rgba(92,162,90,0.2) 0%, transparent 60%)" }}
           />
           <div 
-            className="absolute top-[40%] left-[-20%] w-[70vw] h-[70vw] opacity-30 animate-gradient-drift"
+            className="absolute top-[40%] left-[-20%] w-[70vw] h-[70vw] opacity-30 animate-gradient-drift will-change-[transform]"
             style={{ background: "radial-gradient(ellipse at center, rgba(92,162,90,0.15) 0%, transparent 60%)" }}
           />
         </div>
