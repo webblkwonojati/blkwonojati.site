@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -9,9 +9,14 @@ const POSITION: [number, number] = [112.6575037, -7.9054311];
 export default function MapLibreMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || !containerRef.current || mapRef.current) return;
 
     const map = new maplibregl.Map({
       container: containerRef.current,
@@ -40,7 +45,11 @@ export default function MapLibreMap() {
       map.remove();
       mapRef.current = null;
     };
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) {
+    return <div className="w-full h-full bg-slate-100 animate-pulse" />;
+  }
 
   return (
     <div
